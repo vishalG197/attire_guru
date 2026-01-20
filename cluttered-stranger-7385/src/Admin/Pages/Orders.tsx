@@ -6,20 +6,36 @@ import { styled } from "styled-components";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react';
 
 import halt from "../Images/unrecognized.jpg";
-import { reqOrders } from "../Redux/action";
+import { reqOrders, deleteOrder, updateOrderStatus } from "../Redux/action";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import OrdersCard from "../Components/OrdersCard";
 
 const Orders = () => {
   const isAuth = useSelector((store: any) => store.AuthReducer.isAuth);
-  const [orders,setOrders] = useState([]);
+  const [orders, setOrders] = useState<any[]>([]);
+
   useEffect(() => {
     reqOrders().then((res) => {
       console.log(res.data);
       setOrders(res.data)
     });
   }, []);
+
+  const handleDelete = (id: number) => {
+    deleteOrder(id).then(() => {
+      setOrders(prev => prev.filter(order => order.id !== id));
+      alert("Order Deleted Successfully");
+    }).catch(err => console.error(err));
+  };
+
+  const handleStatusUpdate = (id: number, status: string) => {
+    updateOrderStatus(id, status).then(() => {
+      setOrders(prev => prev.map(order => order.id === id ? { ...order, status } : order));
+      // alert("Status Updated");
+    }).catch(err => console.error(err));
+  }
+
   return (
     <DIV>
       {isAuth && (
@@ -46,12 +62,17 @@ const Orders = () => {
           </MAINDIV>
 
           <ORDERS>
-        {
-            orders?.map((el,index)=>(
-              <OrdersCard key={index}  el={el} />
-            ))
-        }
-      </ORDERS>
+            {
+              orders?.map((el, index) => (
+                <OrdersCard
+                  key={index}
+                  el={el}
+                  onDelete={handleDelete}
+                  onUpdateStatus={handleStatusUpdate}
+                />
+              ))
+            }
+          </ORDERS>
         </div>
       )}
       {!isAuth && <img id="halt" src={halt} />}
@@ -90,12 +111,10 @@ const DIV = styled.div`
 `;
 
 const ORDERS = styled.div`
-
-// border: 1px solid red;
-width: 70%;
-margin:auto;
-display: grid;
-grid-template-columns: repeat(5,1fr)
-gap:25px;
-
+  // border: 1px solid red;
+  width: 95%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
 `

@@ -1,4 +1,4 @@
-import React ,{useState, useEffect}from 'react'
+import React, { useState, useEffect } from 'react'
 import { styled } from 'styled-components'
 import { deleteProduct, getParticularProduct } from '../Redux/action';
 import ProductCard from '../Components/ProductCard';
@@ -14,79 +14,79 @@ import halt from "../Images/unrecognized.jpg";
 const Sandals = () => {
   const [category, setCat] = useState([]);
 
-  
-  const searchquery = useSelector((store: any)=>store.reducer.search)
 
-  
+  const searchquery = useSelector((store: any) => store.ProductReducer.search)
+
+
   const isAuth = useSelector((store: any) => store.AuthReducer.isAuth);
 
-  const handleDelete=(id: any)=>{
-    deleteProduct(id).then(()=>{
-      const newData = category.filter((ele: any)=> ele.id != id)
+  const handleDelete = (id: any) => {
+    deleteProduct(id).then(() => {
+      const newData = category.filter((ele: any) => ele.id != id)
       setCat(newData)
     })
-}
-
-
-useEffect(()=>{
-  if(searchquery){
-    const queryObj ={
-      params :{
-        q: searchquery
-      }
-    }
-    getParticularProduct('sandals',queryObj).then((res)=>{
-      console.log(res.data);
-      setCat(res.data)
-    })
-
-  } else{
-
-    getParticularProduct('sandals',{}).then((res)=>{
-      console.log(res.data);
-      setCat(res.data)
-    })
   }
-},[searchquery])
+
+
+  useEffect(() => {
+    if (searchquery) {
+      const queryObj = {
+        params: {
+          q: searchquery
+        }
+      }
+      getParticularProduct('sandals', queryObj).then((res) => {
+        console.log(res.data);
+        setCat(res.data)
+      })
+
+    } else {
+
+      getParticularProduct('sandals', {}).then((res) => {
+        console.log(res.data);
+        setCat(res.data)
+      })
+    }
+  }, [searchquery])
 
 
 
   return (
     <>
-{
-  isAuth &&   <div>
-
-     <MAINDIV>
-        <Breadcrumb
-          spacing="8px"
-          separator={<ChevronRightIcon color="gray.500" />}
-        >
-          <BreadcrumbItem>
-            <BreadcrumbLink>
-              <Link to={"/Dashboard"}>
-                <span>Dashboard</span>
-              </Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-
-          <BreadcrumbItem isCurrentPage>
-            <BreadcrumbLink>
-              <span>Sandals</span>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-        </Breadcrumb>
-      </MAINDIV>
-    <DIV>
       {
-        category?.map((el,i)=>(
-          <ProductCard el = {el} key={i} handleDelete={handleDelete} />
-          ))
-        }
-    </DIV>
-    </div>}
+        isAuth && <div>
 
-    <DIV>{!isAuth && <img id="halt" src={halt} />}</DIV>
-        </>
+          <MAINDIV>
+            <Breadcrumb
+              spacing="8px"
+              separator={<ChevronRightIcon color="gray.500" />}
+            >
+              <BreadcrumbItem>
+                <BreadcrumbLink>
+                  <Link to={"/Dashboard"}>
+                    <span>Dashboard</span>
+                  </Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+
+              <BreadcrumbItem isCurrentPage>
+                <BreadcrumbLink>
+                  <span>Sandals</span>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+            </Breadcrumb>
+          </MAINDIV>
+          <DIV>
+            {
+              category?.map((el, i) => (
+                <ProductCard el={el} key={i} handleDelete={handleDelete} />
+              ))
+            }
+          </DIV>
+        </div>}
+
+      <DIV>{!isAuth && <img id="halt" src={halt} />}</DIV>
+    </>
   )
 }
 
@@ -112,20 +112,17 @@ const MAINDIV = styled.div`
 
 const DIV = styled.div`
   // border: 2px solid red;
-  
-  width  : 75%;
-  margin-left: 350px;
-  margin-top: 50px;
+  width: 100%;
+  margin: auto;
+  margin-top: 20px;
   gap: 30px;
-  display : grid;
-  grid-template-columns: repeat(3,1fr)
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 
-  
-  #halt{
+  #halt {
     text-align: center;
     margin-left: 35%;
     margin-top: 150px;
     scale: 1.2;
   }
-
-`
+`;

@@ -1,104 +1,98 @@
 import React from 'react'
 import { Productss } from '../Pages/AllProducts';
-import { styled } from 'styled-components';
-
-import {Link} from "react-router-dom"
-import { deleteProduct, getProduct } from '../Redux/action';
-import { Dispatch } from 'redux';
-
-
-
+import { useNavigate, Link } from "react-router-dom"
+import {
+    Box,
+    Image,
+    Badge,
+    Text,
+    Button,
+    Stack,
+    Card,
+    CardBody,
+    CardFooter,
+    Heading,
+    Divider,
+    ButtonGroup,
+    Flex,
+    IconButton
+} from "@chakra-ui/react";
+import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
 
 interface Props {
-    el: Productss ;
-    handleDelete : (id: any)=>void
-    
+    el: Productss;
+    handleDelete: (id: any) => void
 }
 
-const ProductCard = ({el,handleDelete}: Props) => {
+const ProductCard = ({ el, handleDelete }: Props) => {
+    const navigate = useNavigate();
 
-    
-    
-  return (
-    <DIV>
-        <div id='maindiv'>
+    return (
+        <Card
+            maxW='sm'
+            cursor="pointer"
+            onClick={() => navigate(`/admin/edit/${el.id}`)}
+            _hover={{ transform: 'translateY(-5px)', shadow: 'xl', transition: '0.2s' }}
+            transition="0.2s"
+            variant="outline"
+        >
+            <CardBody p={0}>
+                <Image
+                    src={el.image}
+                    alt={el.title}
+                    borderTopRadius="lg"
+                    height="200px"
+                    width="100%"
+                    objectFit="cover"
+                />
+                <Stack mt='4' spacing='2' p={4}>
+                    <Flex justify="space-between" align="center">
+                        <Badge borderRadius='full' px='2' colorScheme='teal'>
+                            {el.category}
+                        </Badge>
+                        <Text color='blue.600' fontSize='lg' fontWeight="bold">
+                            ₹ {el.price}
+                        </Text>
+                    </Flex>
 
-        <img src={el.image}/>
-        <h2>{el.title}</h2>
-        <div id='cat'>
-            <h5>Category: {el.category}</h5>
-            <h4>Color: {el.color}</h4>
-        </div>
-        <p>Desc: {el.description}</p>
+                    <Heading size='md' noOfLines={1} title={el.title}>{el.title}</Heading>
 
-        <div id='gender'>
-        <h3>Price: ₹ {el.price}/-</h3>
-        <h3>Gender: {el.gender}</h3>
+                    <Text fontSize='sm' color='gray.500' noOfLines={2}>
+                        {el.description}
+                    </Text>
 
-        </div>
-        <div id='edit'>
-            <button id='button1'><Link to={`/edit/${el.id}`}>Edit</Link></button>
-            <button id='button2' onClick={()=>handleDelete(el.id)}>Delete</button>
-        </div>
-        </div>
-    </DIV>
-  )
+                    <Flex justify="space-between" fontSize="sm" color="gray.600">
+                        <Text>Gender: {el.gender}</Text>
+                        <Text>Color: {el.color}</Text>
+                    </Flex>
+                </Stack>
+            </CardBody>
+
+            <Divider color="gray.200" />
+
+            <CardFooter p={3} justify="flex-end">
+                <ButtonGroup spacing='2' onClick={(e) => e.stopPropagation()}>
+                    <Button
+                        variant='solid'
+                        colorScheme='blue'
+                        size="sm"
+                        leftIcon={<EditIcon />}
+                        onClick={() => navigate(`/admin/edit/${el.id}`)}
+                    >
+                        Edit
+                    </Button>
+                    <IconButton
+                        variant='ghost'
+                        colorScheme='red'
+                        aria-label='Delete product'
+                        size="sm"
+                        icon={<DeleteIcon />}
+                        onClick={() => handleDelete(el.id)}
+                    />
+                </ButtonGroup>
+            </CardFooter>
+        </Card>
+    )
 }
 
 export default ProductCard
-
-const DIV = styled.div`
-    #maindiv:hover {
-        cursor: pointer;
-        #edit{
-            visibility: visible;  
-        }   
-    }
-
-    #edit{
-        visibility: hidden;
-    }
-
-    #cat, #gender, #edit{
-       width: 70%;
-       display: flex;
-       margin: auto;
-       justify-content: space-between;
-       font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande","Lucida Sans", Arial, sans-serif;
-    }
-
-
-
-    #button1{
-        border: 1px solid;
-        padding: 2px 15px;
-        border-radius: 8px;
-        margin-top: 5px;
-        background-color: #283593;
-        color: white;
-
-    }
-    #button2{
-        border: 1px solid;
-        padding: 2px 6px;
-        border-radius: 8px;
-        margin-top: 5px;
-        background-color: #DD2C00;
-        color: white;
-    }
-
-    #gender{
-
-    }
-
-    img{
-        width: 100%;
-        border-radius: 20px;
-    }
-    padding : 15px;
-
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    border-radius: 20px;
-    padding-bottom : 30px;
-
-`

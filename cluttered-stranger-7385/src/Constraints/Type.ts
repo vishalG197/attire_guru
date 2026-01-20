@@ -14,13 +14,15 @@ export type initialType={
 
  export interface  Iproduct {
    id: string;
-  title: string;
+  title?: string;
+  name?: string;
   description: string;
   price: number;
-  color: string;
-  gender: string;
-  category: string;
-  image: string;
+  color?: string;
+  gender?: string;
+  category?: string;
+  image?: string;
+  images?: string[];
   rating?: number;
   sizes?: string[];
   brand?: string;
@@ -29,12 +31,23 @@ export type initialType={
   pattern?: string;
   offer?:string;
   quantity?: number;
+  discount?: number;
+  material?: string;
+  fit?: string;
+  in_stock?: boolean;
+  colors?: string[];
+  sku?: string;
  };
  export interface productState {
   isLoading: boolean,
    isError: boolean,
   product:Iproduct[],
-  totalPage:number
+  totalPage:number,
+  filterOptions?: {
+    categories: string[];
+    genders: string[];
+    colors: string[];
+  }
  }
  export type productAction ={
   type:string,

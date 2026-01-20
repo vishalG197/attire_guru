@@ -1,31 +1,34 @@
-import {  LOGIN_FAILURE, LOGIN_SUCCESS } from "./actionType";
+import { LOGIN_FAILURE, LOGIN_SUCCESS } from "./actionType";
 
-type initialType={
-    isAuth:boolean;
-  
+type initialType = {
+    isAuth: boolean;
+
 }
-const intitalState: initialType={
-    isAuth:false,
-  
+const adminData = localStorage.getItem("admin");
+const isAuth = adminData ? JSON.parse(adminData).isAuth : false;
+
+const intitalState: initialType = {
+    isAuth: isAuth,
+
 }
 
-export const AuthReducer=(state=intitalState,{type,payload}:{type:string; payload: string})=>{
-    
-    switch(type){
-        case LOGIN_SUCCESS:{
+export const AuthReducer = (state = intitalState, { type, payload }: { type: string; payload: string }) => {
+
+    switch (type) {
+        case LOGIN_SUCCESS: {
             return {
-               
-                isAuth:true,
+
+                isAuth: true,
             }
         }
-        case LOGIN_FAILURE:{
+        case LOGIN_FAILURE: {
             return {
-                isAuth:false,
-                
+                isAuth: false,
+
             }
         }
-                
-        default:{
+
+        default: {
             return state;
         }
     }

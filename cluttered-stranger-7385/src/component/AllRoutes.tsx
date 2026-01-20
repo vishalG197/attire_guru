@@ -1,4 +1,4 @@
-import { Routes ,Route} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import ProductPage from "../Pages/ProductPage";
 import Home from "../Pages/Home";
 import Login from "../Pages/Login";
@@ -8,28 +8,36 @@ import AddtocartPage from "../Pages/AddtocartPage";
 import SingleProduct from "../Pages/SingleProductPage";
 
 
-import {Payment} from "../Pages/Payment";
+import { Payment } from "../Pages/Payment";
 import { PriveteRoute } from "./PriveteRoute";
 import About from "./About";
+import Profile from "../Pages/Profile";
+import MyOrders from "../Pages/MyOrders";
+import OrderDetails from "../Pages/OrderDetails";
 
-export default function AllRoutes(){
+import AdminRoutes from "../Admin/Pages/AllRoutes";
 
-
-
-return <Routes>
-<Route path="/" element={<Home/>}/>
-<Route path="/login" element={<Login/>}/>
-<Route path="/product" element={<ProductPage/>}/>
-<Route path="/admin" element={<h1>AdminPage</h1>}/>
-<Route path="/aboutus" element={<About/>}/>
+export default function AllRoutes() {
 
 
-<Route path="/product/:id" element={<SingleProduct/>}/>
-<Route path="/cart" element={<AddtocartPage/>}/>
-<Route path="/payment" element={ <PriveteRoute> <Payment/></PriveteRoute> }/>
 
-<Route path="*" element={<h1>PageNotFound</h1>}/>
-<Route path="/signup" element={<SignupCard/>}/>
+   return <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/product" element={<ProductPage />} />
+      <Route path="/admin/*" element={<AdminRoutes />} />
+      <Route path="/aboutus" element={<About />} />
+
+
+      <Route path="/product/:id" element={<SingleProduct />} />
+      <Route path="/cart" element={<AddtocartPage />} />
+      <Route path="/payment" element={<PriveteRoute> <Payment /></PriveteRoute>} />
+      <Route path="/profile" element={<PriveteRoute> <Profile /></PriveteRoute>} />
+      <Route path="/my-orders" element={<PriveteRoute> <MyOrders /></PriveteRoute>} />
+      <Route path="/order-details/:id" element={<PriveteRoute> <OrderDetails /></PriveteRoute>} />
+
+      <Route path="*" element={<h1>PageNotFound</h1>} />
+      <Route path="/signup" element={<SignupCard />} />
 
    </Routes>
 }

@@ -1,338 +1,280 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import halt from "../Images/unrecognized.jpg";
-import { styled } from "styled-components";
-import stack from "../Images/Icons/stack.png";
-import user from "../Images/Icons/user.png";
-import pin from "../Images/Icons/pin.png";
-import target from "../Images/Icons/target.png";
-import chart from "../Images/piechart.png";
-import graph from "../Images/graph.png";
-import graph2 from "../Images/graph2.png";
+import {
+  Box,
+  Flex,
+  SimpleGrid,
+  Stat,
+  StatLabel,
+  StatNumber,
+  StatHelpText,
+  StatArrow,
+  Text,
+  useColorModeValue,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  TableContainer,
+  Heading,
+  Icon,
+} from "@chakra-ui/react";
+import { FiUsers, FiShoppingBag, FiPackage, FiDollarSign } from "react-icons/fi";
+import axios from "axios";
+import { API_ENDPOINTS } from "../../config/api"; // Assuming this exists, otherwise hardcode or use relative
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+} from "recharts";
 
 const DashBoard = () => {
-  const isAuth = useSelector((store: any) => store.AuthReducer.isAuth);
+  const bg = useColorModeValue('gray.100', 'gray.900');
+  const isAuth = useSelector((store: any) => store.AuthReducer.isAuth) || localStorage.getItem("admin");
+  const [stats, setStats] = useState({
+    users: 0,
+    products: 0,
+    orders: 0,
+    revenue: 0,
+  });
+  const [categoryData, setCategoryData] = useState<any[]>([]);
+  const [salesData, setSalesData] = useState<any[]>([]);
+  const [recentOrders, setRecentOrders] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // For safety, defaulting to relative paths if API_ENDPOINTS not readily available or complex
+      try {
+        // Fetch Users
+        const usersRes = await axios.get("http://localhost:8080/users");
+        const usersCount = usersRes.data.length;
+
+        // Fetch Products
+        const productsRes = await axios.get("http://localhost:8080/products");
+        const products = productsRes.data;
+        const productsCount = products.length;
+
+        // Process Categories
+        const categories = products.reduce((acc: any, curr: any) => {
+          const cat = curr.category || 'Uncategorized';
+          acc[cat] = (acc[cat] || 0) + 1;
+          return acc;
+        }, {});
+        const catData = Object.keys(categories).map(key => ({
+          name: key,
+          value: categories[key],
+        }));
+        setCategoryData(catData);
+
+
+        // Fetch Orders
+        // Note: db.json might not have orders initially populated well, handling graceful failure
+        let ordersCount = 0;
+        let revenue = 0;
+        let orders = [];
+        try {
+          const ordersRes = await axios.get("http://localhost:8080/orders");
+          orders = ordersRes.data;
+          ordersCount = orders.length;
+
+          const salesByDate: any = {};
+
+          orders.forEach((order: any) => {
+            const amt = order.totalAmount || order.total || order.price || 0;
+            const date = order.date || order.order_date || "Unknown";
+
+            revenue += amt;
+
+            if (salesByDate[date]) {
+              salesByDate[date] += amt;
+            } else {
+              salesByDate[date] = amt;
+            }
+          });
+
+          const salesChartData = Object.keys(salesByDate).map(date => ({
+            name: date,
+            sales: Math.round(salesByDate[date])
+          })).sort((a, b) => new Date(a.name).getTime() - new Date(b.name).getTime());
+
+          setSalesData(salesChartData);
+          setRecentOrders(orders.slice(-5).reverse());
+        } catch (e) {
+          console.log("No orders found or error fetching orders");
+        }
+
+
+        setStats({
+          users: usersCount,
+          products: productsCount,
+          orders: ordersCount,
+          revenue: Math.round(revenue), // Round to integer
+        });
+
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
+      }
+    };
+
+    if (isAuth) {
+      fetchData();
+    }
+  }, [isAuth]);
+
+  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
+
+  if (!isAuth) {
+    return <Box p={5}><Heading>Please Log In</Heading></Box>;
+  }
 
   return (
-    <DIV>
-      {isAuth && 
-        <div className="maindiv">
-          <div className="div1">
-            <div className="div1-1">
-              <div className="div1-1-1">
-                    <h1>2889</h1>
-                    <p>Total Invoices</p>
-              </div>
-              <img src={stack}/>
-            </div>
-            <div className="div1-1">
-              <div className="div1-1-1">
-                    <h1>217</h1>
-                    <p>New Users</p>
-              </div>
-              <img src={user}/>
-            </div>
-            <div className="div1-1">
-              <div className="div1-1-1">
-                    <h1>984</h1>
-                    <p>Unique Visits</p>
-              </div>
-              <img src={pin}/>
-            </div>
-            <div className="div1-1">
-              <div className="div1-1-1">
-                    <h1>12789</h1>
-                    <p>Sales</p>
-              </div>
-              <img src={target}/>
-            </div>
-          </div>
+    <Box>
+      <Heading mb={6} size="lg">Dashboard Overview</Heading>
 
+      <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={5} mb={8}>
+        <StatsCard title="Total Users" stat={stats.users} icon={FiUsers} color="blue.500" />
+        <StatsCard title="Total Products" stat={stats.products} icon={FiShoppingBag} color="green.500" />
+        <StatsCard title="Total Orders" stat={stats.orders} icon={FiPackage} color="orange.500" />
+        <StatsCard title="Total Revenue" stat={`$${stats.revenue}`} icon={FiDollarSign} color="purple.500" />
+      </SimpleGrid>
 
-          <div className="div2">
+      <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={8} mb={8}>
+        <Box bg="white" p={5} shadow="md" borderRadius="lg">
+          <Heading size="md" mb={4}>Product Categories</Heading>
+          {/* @ts-ignore */}
+          <ResponsiveContainer width="100%" height={300}>
+            {/* @ts-ignore */}
+            <PieChart>
+              {/* @ts-ignore */}
+              <Pie
+                data={categoryData}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                label={({ name, percent }: any) => `${name} ${((percent || 0) * 100).toFixed(0)}%`}
+                outerRadius={80}
+                fill="#8884d8"
+                dataKey="value"
+              >
+                {/* @ts-ignore */}
+                {/* @ts-ignore */}
+                {categoryData.map((entry, index) => {
+                  // @ts-ignore
+                  return <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                })}
+              </Pie>
+              {/* @ts-ignore */}
+              <Tooltip />
+              {/* @ts-ignore */}
+              <Legend />
+            </PieChart>
+          </ResponsiveContainer>
+        </Box>
 
-              <div className="div2-1">
-                <h1>EARNING REPORT</h1>
-                <img src={chart}/>
-                <div className="div2-1-0">
-                  <h2>1.2M </h2>
-                  <label>Total</label>
-                </div>
-                <div className="div2-1-1">
-                  <p><p id="s1"></p>Sales</p>
-                  <h3>60%</h3> 
-                </div>
-                <div className="div2-1-1">
-                  <p><p id="s2"></p>Open Campaign</p>
-                  <h3>30%</h3> 
-                </div>
-                <div className="div2-1-1">
-                  <p><p id="s3"></p>Miscellaneous</p>
-                  <h3>10%</h3> 
-                </div>
+        <Box bg="white" p={5} shadow="md" borderRadius="lg">
+          <Heading size="md" mb={4}>Sales Analytics</Heading>
+          {/* @ts-ignore */}
+          <ResponsiveContainer width="100%" height={300}>
+            {/* @ts-ignore */}
+            <BarChart data={salesData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+              {/* @ts-ignore */}
+              <CartesianGrid strokeDasharray="3 3" />
+              {/* @ts-ignore */}
+              <XAxis dataKey="name" />
+              {/* @ts-ignore */}
+              <YAxis />
+              {/* @ts-ignore */}
+              <Tooltip />
+              {/* @ts-ignore */}
+              <Legend />
+              {/* @ts-ignore */}
+              <Bar dataKey="sales" fill="#82ca9d" />
+            </BarChart>
+          </ResponsiveContainer>
+        </Box>
+      </SimpleGrid>
 
+      <Box bg="white" p={5} shadow="md" borderRadius="lg">
+        <Heading size="md" mb={4}>Recent Orders</Heading>
+        <TableContainer>
+          <Table variant='simple'>
+            <Thead>
+              <Tr>
+                <Th>Order ID</Th>
+                <Th>Customer</Th>
+                <Th>Total</Th>
+                <Th>Status</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {recentOrders.length > 0 ? recentOrders.map((order) => (
+                <Tr key={order.id}>
+                  <Td>{order.id}</Td>
+                  <Td>{order.username || "Guest"}</Td>
+                  <Td>${order.total || order.price || "-"}</Td>
+                  <Td color="green.500" fontWeight="bold">Completed</Td>
+                </Tr>
+              )) : (
+                <Tr>
+                  <Td colSpan={4} textAlign="center">No recent orders found</Td>
+                </Tr>
+              )}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </Box>
 
-              </div>
-
-              <div className="div2-2">
-                  <div className="div2-2-1">
-                    <h1>PERFORMANCE</h1>
-
-                    <div className="perf">
-                      <div>
-                        <h2>Tasks</h2>
-                        <p>5.6% change Today</p>
-                      </div>
-                      <div><h3>+20009</h3></div>
-                    </div>
-
-                    <div className="perf">
-                      <div>
-                        <h2>Member Profit</h2>
-                        <p>3 days ago</p>
-                      </div>
-                      <div><h3 style={{color:"red"}}>+91964</h3></div>
-                    </div>
-
-                    <div className="perf">
-                      <div>
-                        <h2>Orders</h2>
-                        <p>Weekly Orders</p>
-                      </div>
-                      <div><h3 style={{color:"green"}}>-200</h3></div>
-                    </div>
-
-                    <div className="perf">
-                      <div>
-                        <h2>Pending</h2>
-                        <p>Pending Tasks</p>
-                      </div>
-                      <div><h3 style={{color:"orange"}}>+5152</h3></div>
-                    </div>
-
-                    <div className="perf">
-                      <div>
-                        <h2>Revenue</h2>
-                        <p>5% increase</p>
-                      </div>
-                      <div><h3 style={{color:"teal"}}>+89997</h3></div>
-                    </div>
-
-                  </div>
-
-                  <div className="div2-2-2">
-                      <h1>YEAR-WISE PERFORMANCE</h1>
-                      <p>Performance of the team is 75% higher this year !</p>
-                      <img src={graph}/>
-                  </div>
-              </div>
-          </div>
-
-          <div className="div3">
-            <img src={graph2}/>
-          </div>
-        </div>
-      }
-      {!isAuth && <img id="halt" src={halt} />}
-    </DIV>
+    </Box>
   );
 };
 
+interface StatsCardProps {
+  title: string;
+  stat: any;
+  icon: any;
+  color: string;
+}
+
+const StatsCard = ({ title, stat, icon, color }: StatsCardProps) => {
+  return (
+    <Stat
+      px={{ base: 2, md: 4 }}
+      py={'5'}
+      shadow={'xl'}
+      border={'1px solid'}
+      borderColor={useColorModeValue('gray.800', 'gray.500')}
+      rounded={'lg'}
+      bg="white"
+    >
+      <Flex justifyContent={'space-between'}>
+        <Box pl={{ base: 2, md: 4 }}>
+          <StatLabel fontWeight={'medium'} isTruncated>
+            {title}
+          </StatLabel>
+          <StatNumber fontSize={'2xl'} fontWeight={'medium'}>
+            {stat}
+          </StatNumber>
+        </Box>
+        <Box
+          my={'auto'}
+          color={useColorModeValue('gray.800', 'gray.200')}
+          alignContent={'center'}>
+          <Icon as={icon} w={8} h={8} color={color} />
+        </Box>
+      </Flex>
+    </Stat>
+  );
+}
+
 export default DashBoard;
 
-const DIV = styled.div`
-
-  background-color: #E8EAF6;
-  height: 1200px;
-  padding: 30px;
-
-  #halt {
-    text-align: center;
-    margin-left: 35%;
-    margin-top: 150px;
-    scale: 1.2;
-  }
-
-  .div2-1 img:hover {
-    scale:1.2;
-    transition: 500ms;
-    cursor: pointer;
-  }
-
-  .div2-2 img:hover {
-    scale:1.1;
-    transition: 500ms;
-    cursor: pointer;
-  }
-
-  .div3{
-    width: 70%;
-    display: flex;
-    margin: auto;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-    border-radius: 5px;
-    margin-top: 30px;
-  }
-  .div3 img{
-    width: 100%;
-  }
-
-  .div2-2{
-    width: 65%;
-    // border: 1px solid;
-    display: flex;
-    justify-content: space-between;
-    align-items: start;
-    background-color: white;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-    border-radius: 5px;
-  }
-  
-  .div2-2-1{
-    // border: 1px solid red;
-    width: 40%;
-    border-right: 1px solid grey;
-    text-align: start;
-    padding:25px;
-    
-  }
-
-  .div2-2-1 h1{
-    font-size : 25px;
-
-  }
-
-  .div2-2-2{
-    // border:  1px solid;
-    padding: 25px;
-    text-align: start;
-  }
-
-  .div2-2-2 h1{
-    font-size: 25px;
-    margin-bottom: 30px;
-  }
-  .div2-2-2 img{
-    width: 100%;
-    margin-top: 110px;
-  }
-  .perf{
-    display: flex;
-    justify-content: space-between;
-    margin-top: 16px;
-  }
-  .perf p{
-    font-size: 15px;
-  }
-  .perf h3{
-    font-size : 22px;
-    color: #1976D2;
-  }
-
-  .div1{
-    
-    display: flex;
-    justify-content: space-between;
-    width: 70%;
-    margin: auto;
-    margin-top: 30px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-    border-radius : 5px;
-    background-color: white;
-
-  }
-
-  .div1-1{
-    // border: 2px solid red;
-    border-left: 1px solid grey;
-    padding: 5px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  img{
-    width: 25%;
-    
-  }
-  .div2-1-0{
-    width: 50%;
-    display: flex;
-    justify-content: space-between;
-    margin: auto;
-    align-items: center;
-  }
-
-  
-
-  .div1-1-1 h1{
-    font-size: 45px;
-    font-weight: bold;
-  }
-  p{
-    color: gray;
-  }
-
-  .div2{
-    // border: 1px solid;
-    width: 70%;
-    margin: auto;
-    margin-top: 30px;
-    display: flex;
-    justify-content: space-between;
-    margin: auto;
-    margin-top:40px;
-  }
-  .div2-1{
-    // border: 1px solid red;
-    width: 30%;
-    text-align: center;
-    padding: 30px;
-    background-color: white;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-    border-radius: 5px;
-  }
-
-  .div2-1 h1{
-    font-size: 25px;
-    margin-bottom: 20px;
-  }
-  .div2-1 img{
-    width: 50%;
-    margin-left: 70px;
-  }
-
-  .div2-1-0 h2{
-    font-size: 32px;
-    font-weight: bold;
-
-  }
-  .div2-1-1{
-    display: flex;
-    justify-content: space-between;
-    margin: auto;
-    align-items: center;
-  }
-  .div2-1-1 h3{
-    font-weight: bold;
-
-  }
-
-  #s1,#s2,#s3{
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-  }
-
-  #s1{
-    background-color: #007bff
-  }
-  #s2{
-    background-color:#fdbab1
-  }
-  #s3{
-    background-color:#f3f6f9
-  }
-  
-  
-  
-`;

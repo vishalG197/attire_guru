@@ -17,6 +17,7 @@ import { ToastContainer, toast } from "react-toastify";
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from "axios";
 import { Button } from "@chakra-ui/react";
+import { API_ENDPOINTS } from "../config/api";
 
 export const Payment = () => {
   const [name,setName] = useState<string>("")
@@ -58,7 +59,7 @@ export const Payment = () => {
         }
         console.log(obj,data);
         
-        axios.post("https://cluttered-stranger-backend.onrender.com/orders",obj).then((res)=> console.log(res)).catch((err)=> console.log(err))
+        axios.post(API_ENDPOINTS.ORDERS,obj).then((res)=> console.log(res)).catch((err)=> console.log(err))
         localStorage.removeItem("AddedToCart")
         setTimeout(()=>{
           

@@ -1,0 +1,1390 @@
+{
+  "products": [
+    {
+      "id": "MF-001",
+      "brand": "NordThread",
+      "category": "Shirts",
+      "name": "Cotton Oxford Shirt",
+      "description": "Classic oxford shirt in marine blue, breathable cotton.",
+      "price": 48,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [
+        "Navy",
+        "White"
+      ],
+      "material": "100% cotton",
+      "fit": "Regular",
+      "in_stock": true,
+      "rating": 4.5,
+      "images": [
+        "https://th.bing.com/th/id/R.78f3f76921f2cbf78e09366035b9276e?rik=iKRVzJK40Fjfmw&riu=http%3a%2f%2fbrooksbrothers.bynder.com%2fmatch%2fWebName%2fWV01162_WHITE%2fCLASSIC_FIT_COTTON_OXFORD_SHIRT_WHITE%3f%24small%24&ehk=OL0CIHQfOVXl%2bqvgaNQS7T6W0eRBCyL%2fppooF6MZAQ8%3d&risl=&pid=ImgRaw&r=0"
+      ],
+      "sku": "NRT-OXF-NS-NVY",
+      "discount": 10,
+      "gender": "male",
+      "color": "Navy"
+    },
+    {
+      "id": "MF-002",
+      "brand": "VentureWear",
+      "category": "Jeans",
+      "name": "Bryson Slim Chinos",
+      "description": "Stretch chino with tapered leg.",
+      "price": 64,
+      "sizes": [
+        "28",
+        "30",
+        "32",
+        "34",
+        "36"
+      ],
+      "colors": [
+        "Beige",
+        "Navy",
+        "Charcoal"
+      ],
+      "material": "98% cotton, 2% elastane",
+      "fit": "Slim",
+      "in_stock": true,
+      "rating": 4.4,
+      "images": [
+        "https://cdn.media.amplience.net/i/mrpricegroup/01_101446875_SI_00"
+      ],
+      "sku": "VNT-CHN-BS-BEI",
+      "discount": 0,
+      "gender": "female",
+      "color": "Cream"
+    },
+    {
+      "id": "MF-003",
+      "brand": "TrailWear",
+      "category": "Shoes",
+      "name": "Urban Hike Boots",
+      "description": "Waterproof hiking boots with ankle support.",
+      "price": 120,
+      "sizes": [
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12"
+      ],
+      "colors": [
+        "Brown",
+        "Black"
+      ],
+      "material": "Leather and synthetic",
+      "fit": "True to size",
+      "in_stock": true,
+      "rating": 4.6,
+      "images": [
+        "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200"
+      ],
+      "sku": "TRL-BT-UH-BRN",
+      "discount": 15,
+      "gender": "male",
+      "color": "Brown"
+    },
+    {
+      "id": "MF-004",
+      "brand": "StyleMax",
+      "category": "Shirts",
+      "name": "Premium T-Shirt",
+      "description": "Comfort fit premium cotton t-shirt.",
+      "price": 29.99,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [
+        "White",
+        "Black",
+        "Gray"
+      ],
+      "material": "100% organic cotton",
+      "fit": "Comfort",
+      "in_stock": true,
+      "rating": 4.3,
+      "images": [
+        "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=1200"
+      ],
+      "sku": "STY-TSH-PR-WHT",
+      "discount": 5,
+      "gender": "female",
+      "color": "White"
+    },
+    {
+      "id": "MF-005",
+      "brand": "ClassicWear",
+      "category": "Jeans",
+      "name": "Straight Fit Denim",
+      "description": "Classic straight fit blue jeans.",
+      "price": 59.99,
+      "sizes": [
+        "28",
+        "30",
+        "32",
+        "34",
+        "36",
+        "38"
+      ],
+      "colors": [
+        "Dark Blue",
+        "Light Blue"
+      ],
+      "material": "100% cotton denim",
+      "fit": "Straight",
+      "in_stock": true,
+      "rating": 4.4,
+      "images": [
+        "https://images.unsplash.com/photo-1542272604-787c62d465d1?q=80&w=1200"
+      ],
+      "sku": "CLS-JNS-SF-DBL",
+      "discount": 8,
+      "gender": "male",
+      "color": "Blue"
+    },
+    {
+      "id": "MF-006",
+      "brand": "SportZone",
+      "category": "Shoes",
+      "name": "Running Sneakers",
+      "description": "Lightweight running shoes with gel cushioning.",
+      "price": 89.99,
+      "sizes": [
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13"
+      ],
+      "colors": [
+        "White",
+        "Black",
+        "Blue"
+      ],
+      "material": "Mesh and rubber",
+      "fit": "True to size",
+      "in_stock": true,
+      "rating": 4.5,
+      "images": [
+        "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200"
+      ],
+      "sku": "SPZ-RUN-LW-WHT",
+      "discount": 12,
+      "gender": "female",
+      "color": "White"
+    },
+    {
+      "id": "MF-007",
+      "brand": "ElegantStyle",
+      "category": "Shirts",
+      "name": "Formal Dress Shirt",
+      "description": "Professional dress shirt for formal occasions.",
+      "price": 79.99,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        "White",
+        "Light Blue",
+        "Black"
+      ],
+      "material": "100% cotton",
+      "fit": "Slim",
+      "in_stock": true,
+      "rating": 4.7,
+      "images": [
+        "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=1200"
+      ],
+      "sku": "ELG-FRM-DSH-WHT",
+      "discount": 10,
+      "gender": "male",
+      "color": "White"
+    },
+    {
+      "id": "MF-008",
+      "brand": "ComfortFit",
+      "category": "Jeans",
+      "name": "Relaxed Fit Denim",
+      "description": "Comfortable relaxed fit jeans.",
+      "price": 54.99,
+      "sizes": [
+        "28",
+        "30",
+        "32",
+        "34",
+        "36",
+        "38",
+        "40"
+      ],
+      "colors": [
+        "Medium Blue",
+        "Black"
+      ],
+      "material": "99% cotton, 1% elastane",
+      "fit": "Relaxed",
+      "in_stock": true,
+      "rating": 4.2,
+      "images": [
+        "https://images.unsplash.com/photo-1542272604-787c62d465d1?q=80&w=1200"
+      ],
+      "sku": "CMF-JNS-RF-MDB",
+      "discount": 0,
+      "gender": "female",
+      "color": "Blue"
+    },
+    {
+      "id": "MF-009",
+      "brand": "OutdoorPro",
+      "category": "Shoes",
+      "name": "Sandals Pro",
+      "description": "Durable sandals for outdoor activities.",
+      "price": 39.99,
+      "sizes": [
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12"
+      ],
+      "colors": [
+        "Black",
+        "Brown",
+        "Gray"
+      ],
+      "material": "Rubber and synthetic",
+      "fit": "True to size",
+      "in_stock": true,
+      "rating": 4.1,
+      "images": [
+        "https://images.unsplash.com/photo-1572635196237-14b3f281503f?q=80&w=1200"
+      ],
+      "sku": "OTP-SND-PR-BLK",
+      "discount": 20,
+      "gender": "male",
+      "color": "Black"
+    },
+    {
+      "id": "MF-010",
+      "brand": "CasualVibes",
+      "category": "Shirts",
+      "name": "Striped Polo Shirt",
+      "description": "Classic striped polo shirt.",
+      "price": 44.99,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [
+        "Blue",
+        "Red",
+        "Green"
+      ],
+      "material": "100% pique cotton",
+      "fit": "Regular",
+      "in_stock": true,
+      "rating": 4.3,
+      "images": [
+        "https://images.unsplash.com/photo-1536685290336-46742c940901?q=80&w=1200"
+      ],
+      "sku": "CSV-PLO-STR-BLU",
+      "discount": 7,
+      "gender": "female",
+      "color": "Blue"
+    },
+    {
+      "id": "MF-011",
+      "brand": "DenimKing",
+      "category": "Jeans",
+      "name": "Skinny Fit Jeans",
+      "description": "Trendy skinny fit dark jeans.",
+      "price": 62.99,
+      "sizes": [
+        "26",
+        "28",
+        "30",
+        "32",
+        "34"
+      ],
+      "colors": [
+        "Dark Blue",
+        "Black"
+      ],
+      "material": "98% cotton, 2% elastane",
+      "fit": "Skinny",
+      "in_stock": true,
+      "rating": 4.4,
+      "images": [
+        "https://images.unsplash.com/photo-1542272604-787c62d465d1?q=80&w=1200"
+      ],
+      "sku": "DNM-JNS-SKN-DBL",
+      "discount": 10,
+      "gender": "male",
+      "color": "Blue"
+    },
+    {
+      "id": "MF-012",
+      "brand": "WalkEasy",
+      "category": "Shoes",
+      "name": "Comfortable Loafers",
+      "description": "Slip-on loafers for everyday wear.",
+      "price": 75,
+      "sizes": [
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12"
+      ],
+      "colors": [
+        "Brown",
+        "Black",
+        "Tan"
+      ],
+      "material": "Suede and rubber",
+      "fit": "True to size",
+      "in_stock": true,
+      "rating": 4.2,
+      "images": [
+        "https://images.unsplash.com/photo-1560769629-975ec94e6a86?q=80&w=1200"
+      ],
+      "sku": "WLK-LOF-CMF-BRN",
+      "discount": 0,
+      "gender": "female",
+      "color": "Brown"
+    },
+    {
+      "id": "MF-013",
+      "brand": "TrendyWear",
+      "category": "Shirts",
+      "name": "Graphic Print T-Shirt",
+      "description": "Cool graphic print casual t-shirt.",
+      "price": 34.99,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        "White",
+        "Black"
+      ],
+      "material": "100% cotton",
+      "fit": "Regular",
+      "in_stock": true,
+      "rating": 4,
+      "images": [
+        "https://images.unsplash.com/photo-1581655353564-df123a1eb820?q=80&w=1200"
+      ],
+      "sku": "TRD-GRP-TSH-WHT",
+      "discount": 15,
+      "gender": "male",
+      "color": "White"
+    },
+    {
+      "id": "MF-014",
+      "brand": "CasualFit",
+      "category": "Jeans",
+      "name": "Distressed Jeans",
+      "description": "Fashionable distressed denim jeans.",
+      "price": 69.99,
+      "sizes": [
+        "26",
+        "28",
+        "30",
+        "32",
+        "34"
+      ],
+      "colors": [
+        "Black",
+        "Blue"
+      ],
+      "material": "100% cotton",
+      "fit": "Slim",
+      "in_stock": false,
+      "rating": 4.3,
+      "images": [
+        "https://images.unsplash.com/photo-1542272604-787c62d465d1?q=80&w=1200"
+      ],
+      "sku": "CSF-JNS-DIS-BLK",
+      "discount": 25,
+      "gender": "female",
+      "color": "Black"
+    },
+    {
+      "id": "MF-015",
+      "brand": "StreetStyle",
+      "category": "Shoes",
+      "name": "High-Top Sneakers",
+      "description": "Stylish high-top casual sneakers.",
+      "price": 99.99,
+      "sizes": [
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13"
+      ],
+      "colors": [
+        "White",
+        "Black",
+        "Red"
+      ],
+      "material": "Canvas and rubber",
+      "fit": "True to size",
+      "in_stock": true,
+      "rating": 4.4,
+      "images": [
+        "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200"
+      ],
+      "sku": "STS-HTS-SNK-WHT",
+      "discount": 5,
+      "gender": "male",
+      "color": "White"
+    },
+    {
+      "id": "MF-016",
+      "brand": "SummerStyle",
+      "category": "Shirts",
+      "name": "Linen Casual Shirt",
+      "description": "Breathable linen shirt for summer.",
+      "price": 55,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        "White",
+        "Cream",
+        "Light Blue"
+      ],
+      "material": "100% linen",
+      "fit": "Regular",
+      "in_stock": true,
+      "rating": 4.5,
+      "images": [
+        "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?q=80&w=1200"
+      ],
+      "sku": "SMR-LNN-CSL-WHT",
+      "discount": 8,
+      "gender": "female",
+      "color": "White"
+    },
+    {
+      "id": "MF-017",
+      "brand": "FitZone",
+      "category": "Jeans",
+      "name": "Performance Denim",
+      "description": "Technical denim with moisture-wicking.",
+      "price": 89.99,
+      "sizes": [
+        "30",
+        "32",
+        "34",
+        "36"
+      ],
+      "colors": [
+        "Navy",
+        "Dark Blue"
+      ],
+      "material": "97% cotton, 3% polyester",
+      "fit": "Slim",
+      "in_stock": true,
+      "rating": 4.6,
+      "images": [
+        "https://images.unsplash.com/photo-1542272604-787c62d465d1?q=80&w=1200"
+      ],
+      "sku": "FTZ-PRM-DEN-NVY",
+      "discount": 12,
+      "gender": "male",
+      "color": "Navy"
+    },
+    {
+      "id": "MF-018",
+      "brand": "ComfortSteps",
+      "category": "Shoes",
+      "name": "Walking Shoes",
+      "description": "Orthopedic walking shoes for comfort.",
+      "price": 110,
+      "sizes": [
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13"
+      ],
+      "colors": [
+        "Black",
+        "Gray",
+        "Navy"
+      ],
+      "material": "Mesh and rubber",
+      "fit": "True to size",
+      "in_stock": true,
+      "rating": 4.7,
+      "images": [
+        "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200"
+      ],
+      "sku": "CMF-WLK-SH-BLK",
+      "discount": 0,
+      "gender": "female",
+      "color": "Black"
+    },
+    {
+      "id": "MF-019",
+      "brand": "VintageVibes",
+      "category": "Shirts",
+      "name": "Vintage Band T-Shirt",
+      "description": "Retro vintage band graphic t-shirt.",
+      "price": 39.99,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [
+        "Black",
+        "White"
+      ],
+      "material": "100% cotton",
+      "fit": "Regular",
+      "in_stock": true,
+      "rating": 4.2,
+      "images": [
+        "https://images.unsplash.com/photo-1503341504253-dff4815485f1?q=80&w=1200"
+      ],
+      "sku": "VNT-BND-TSH-BLK",
+      "discount": 18,
+      "gender": "male",
+      "color": "Black"
+    },
+    {
+      "id": "MF-020",
+      "brand": "ActiveWear",
+      "category": "Jeans",
+      "name": "Cargo Pants",
+      "description": "Practical cargo pants with multiple pockets.",
+      "price": 72,
+      "sizes": [
+        "28",
+        "30",
+        "32",
+        "34",
+        "36"
+      ],
+      "colors": [
+        "Khaki",
+        "Navy",
+        "Olive"
+      ],
+      "material": "100% cotton canvas",
+      "fit": "Regular",
+      "in_stock": true,
+      "rating": 4.1,
+      "images": [
+        "https://images.unsplash.com/photo-1542272604-787c62d465d1?q=80&w=1200"
+      ],
+      "sku": "ACT-CRG-PNT-KHK",
+      "discount": 10,
+      "gender": "female",
+      "color": "Multi"
+    },
+    {
+      "id": "MF-021",
+      "brand": "CityWalk",
+      "category": "Shoes",
+      "name": "Casual Slip-Ons",
+      "description": "Easy-to-wear slip-on casual shoes.",
+      "price": 48,
+      "sizes": [
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12"
+      ],
+      "colors": [
+        "Black",
+        "White",
+        "Gray"
+      ],
+      "material": "Canvas and rubber",
+      "fit": "True to size",
+      "in_stock": true,
+      "rating": 4,
+      "images": [
+        "https://images.unsplash.com/photo-1560769629-975ec94e6a86?q=80&w=1200"
+      ],
+      "sku": "CTY-SLP-ON-BLK",
+      "discount": 20,
+      "gender": "male",
+      "color": "Black"
+    },
+    {
+      "id": "MF-022",
+      "brand": "PremiumFit",
+      "category": "Shirts",
+      "name": "Henley Shirt",
+      "description": "Classic henley long-sleeve shirt.",
+      "price": 42,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [
+        "White",
+        "Black",
+        "Navy",
+        "Burgundy"
+      ],
+      "material": "100% cotton",
+      "fit": "Regular",
+      "in_stock": true,
+      "rating": 4.3,
+      "images": [
+        "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=1200"
+      ],
+      "sku": "PRM-HEN-LNG-WHT",
+      "discount": 5,
+      "gender": "female",
+      "color": "White"
+    },
+    {
+      "id": "MF-023",
+      "brand": "DenimMasters",
+      "category": "Jeans",
+      "name": "Premium Blue Jeans",
+      "description": "Premium quality dark blue jeans.",
+      "price": 99.99,
+      "sizes": [
+        "28",
+        "30",
+        "32",
+        "34",
+        "36"
+      ],
+      "colors": [
+        "Dark Blue"
+      ],
+      "material": "100% cotton premium denim",
+      "fit": "Slim",
+      "in_stock": true,
+      "rating": 4.8,
+      "images": [
+        "https://images.unsplash.com/photo-1542272604-787c62d465d1?q=80&w=1200"
+      ],
+      "sku": "DNM-PRM-JNS-DBL",
+      "discount": 0,
+      "gender": "male",
+      "color": "Blue"
+    },
+    {
+      "id": "MF-024",
+      "brand": "SportStep",
+      "category": "Shoes",
+      "name": "Basketball Shoes",
+      "description": "Professional basketball court shoes.",
+      "price": 150,
+      "sizes": [
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13"
+      ],
+      "colors": [
+        "Black",
+        "White",
+        "Red"
+      ],
+      "material": "Synthetic leather and rubber",
+      "fit": "True to size",
+      "in_stock": true,
+      "rating": 4.6,
+      "images": [
+        "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200"
+      ],
+      "sku": "SPT-BAS-SH-BLK",
+      "discount": 15,
+      "gender": "female",
+      "color": "Black"
+    },
+    {
+      "id": "MF-025",
+      "brand": "CasualChic",
+      "category": "Shirts",
+      "name": "Chambray Shirt",
+      "description": "Light and comfortable chambray shirt.",
+      "price": 58,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        "Light Blue",
+        "Indigo"
+      ],
+      "material": "100% cotton chambray",
+      "fit": "Regular",
+      "in_stock": true,
+      "rating": 4.4,
+      "images": [
+        "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?q=80&w=1200"
+      ],
+      "sku": "CSC-CMB-SHR-LBL",
+      "discount": 10,
+      "gender": "male",
+      "color": "Blue"
+    },
+    {
+      "id": "MF-026",
+      "brand": "TrendFit",
+      "category": "Jeans",
+      "name": "Flared Jeans",
+      "description": "Trendy flared denim jeans.",
+      "price": 74.99,
+      "sizes": [
+        "24",
+        "26",
+        "28",
+        "30",
+        "32"
+      ],
+      "colors": [
+        "Dark Blue",
+        "Light Blue"
+      ],
+      "material": "98% cotton, 2% elastane",
+      "fit": "Flare",
+      "in_stock": true,
+      "rating": 4.2,
+      "images": [
+        "https://images.unsplash.com/photo-1542272604-787c62d465d1?q=80&w=1200"
+      ],
+      "sku": "TRD-FLR-JNS-DBL",
+      "discount": 12,
+      "gender": "female",
+      "color": "Blue"
+    },
+    {
+      "id": "MF-027",
+      "brand": "TrailMaster",
+      "category": "Shoes",
+      "name": "Hiking Boots",
+      "description": "Heavy-duty hiking boots for mountain trails.",
+      "price": 180,
+      "sizes": [
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12"
+      ],
+      "colors": [
+        "Brown",
+        "Black"
+      ],
+      "material": "Leather and Gore-Tex",
+      "fit": "True to size",
+      "in_stock": true,
+      "rating": 4.9,
+      "images": [
+        "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200"
+      ],
+      "sku": "TRL-HKG-BT-BRN",
+      "discount": 0,
+      "gender": "male",
+      "color": "Brown"
+    },
+    {
+      "id": "MF-028",
+      "brand": "StylishFit",
+      "category": "Shirts",
+      "name": "Flannel Shirt",
+      "description": "Classic flannel checkered shirt.",
+      "price": 52,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [
+        "Red",
+        "Blue",
+        "Green"
+      ],
+      "material": "100% cotton flannel",
+      "fit": "Regular",
+      "in_stock": true,
+      "rating": 4.5,
+      "images": [
+        "https://images.unsplash.com/photo-1626497764746-6dc36546b388?q=80&w=1200"
+      ],
+      "sku": "STY-FLN-SHR-RED",
+      "discount": 8,
+      "gender": "female",
+      "color": "Multi"
+    },
+    {
+      "id": "MF-029",
+      "brand": "ComfortZone",
+      "category": "Jeans",
+      "name": "Mom Jeans",
+      "description": "High-waisted mom jeans.",
+      "price": 68,
+      "sizes": [
+        "24",
+        "26",
+        "28",
+        "30",
+        "32"
+      ],
+      "colors": [
+        "Light Wash",
+        "Medium Wash"
+      ],
+      "material": "100% cotton",
+      "fit": "High-waisted",
+      "in_stock": true,
+      "rating": 4.3,
+      "images": [
+        "https://images.unsplash.com/photo-1542272604-787c62d465d1?q=80&w=1200"
+      ],
+      "sku": "CMZ-MOM-JNS-LW",
+      "discount": 10,
+      "gender": "male",
+      "color": "Multi"
+    },
+    {
+      "id": "MF-030",
+      "brand": "UrbanStyle",
+      "category": "Shoes",
+      "name": "Chelsea Boots",
+      "description": "Elegant Chelsea boots for formal wear.",
+      "price": 145,
+      "sizes": [
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12"
+      ],
+      "colors": [
+        "Black",
+        "Brown"
+      ],
+      "material": "Suede and elastic",
+      "fit": "True to size",
+      "in_stock": true,
+      "rating": 4.7,
+      "images": [
+        "https://images.unsplash.com/photo-1560769629-975ec94e6a86?q=80&w=1200"
+      ],
+      "sku": "URB-CHL-BT-BLK",
+      "discount": 5,
+      "gender": "female",
+      "color": "Black"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Saurabh Kumar",
+      "email": "saurabh@gmail.com",
+      "password": "saurabh123",
+      "role": "admin",
+      "created_at": "2025-12-01"
+    },
+    {
+      "id": 2,
+      "name": "Vishal Giri",
+      "email": "vishal@gmail.com",
+      "password": "vishal123",
+      "role": "admin",
+      "created_at": "2025-12-02"
+    },
+    {
+      "id": 3,
+      "name": "Murad Khan",
+      "email": "murad@gmail.com",
+      "password": "murad123",
+      "role": "admin",
+      "created_at": "2025-12-03"
+    },
+    {
+      "id": 4,
+      "name": "Priya Singh",
+      "email": "priya@gmail.com",
+      "password": "priya123",
+      "role": "customer",
+      "created_at": "2025-12-10"
+    },
+    {
+      "id": 5,
+      "name": "Rajesh Patel",
+      "email": "rajesh@gmail.com",
+      "password": "rajesh123",
+      "role": "customer",
+      "created_at": "2025-12-11"
+    },
+    {
+      "id": 6,
+      "name": "Anjali Sharma",
+      "email": "anjali@gmail.com",
+      "password": "anjali123",
+      "role": "customer",
+      "created_at": "2025-12-12"
+    },
+    {
+      "id": 7,
+      "name": "Arjun Verma",
+      "email": "arjun@gmail.com",
+      "password": "arjun123",
+      "role": "customer",
+      "created_at": "2025-12-13"
+    },
+    {
+      "id": 8,
+      "name": "Neha Gupta",
+      "email": "neha@gmail.com",
+      "password": "neha123",
+      "role": "customer",
+      "created_at": "2025-12-14"
+    },
+    {
+      "id": 9,
+      "name": "Vikram Singh",
+      "email": "vikram@gmail.com",
+      "password": "vikram123",
+      "role": "customer",
+      "created_at": "2025-12-15"
+    },
+    {
+      "id": 10,
+      "name": "Divya Rao",
+      "email": "divya@gmail.com",
+      "password": "divya123",
+      "role": "customer",
+      "created_at": "2025-12-16"
+    },
+    {
+      "id": 0.47245688617652726,
+      "username": "vishalgiri",
+      "email": "vishal@gmail.com",
+      "password": "vishal"
+    },
+    {
+      "id": 0.11816952830946492,
+      "username": "vishalgiri",
+      "email": "vishal@gmail.com",
+      "password": "vishal"
+    }
+  ],
+  "orders": [
+    {
+      "id": 1,
+      "user_id": 4,
+      "order_date": "2026-01-10",
+      "status": "Delivered",
+      "total": 245.98,
+      "items": [
+        {
+          "product_id": "MF-001",
+          "product_name": "Cotton Oxford Shirt",
+          "quantity": 2,
+          "price": 48,
+          "subtotal": 96,
+          "size": "M",
+          "color": "Navy"
+        },
+        {
+          "product_id": "MF-005",
+          "product_name": "Straight Fit Denim",
+          "quantity": 1,
+          "price": 59.99,
+          "subtotal": 59.99,
+          "size": "32",
+          "color": "Dark Blue"
+        }
+      ],
+      "shipping_address": "123 Fashion Lane, Mumbai, India"
+    },
+    {
+      "id": 2,
+      "user_id": 5,
+      "order_date": "2026-01-11",
+      "status": "processing",
+      "total": 189.98,
+      "items": [
+        {
+          "product_id": "MF-003",
+          "product_name": "Urban Hike Boots",
+          "quantity": 1,
+          "price": 120,
+          "subtotal": 120,
+          "size": "10",
+          "color": "Brown"
+        }
+      ],
+      "shipping_address": "456 Shoe Street, Delhi, India"
+    },
+    {
+      "id": 3,
+      "user_id": 6,
+      "order_date": "2026-01-12",
+      "status": "shipped",
+      "total": 135.97,
+      "items": [
+        {
+          "product_id": "MF-004",
+          "product_name": "Premium T-Shirt",
+          "quantity": 3,
+          "price": 29.99,
+          "subtotal": 89.97,
+          "size": "M",
+          "color": "White"
+        }
+      ],
+      "shipping_address": "789 Casual Avenue, Bangalore, India"
+    },
+    {
+      "id": 4,
+      "user_id": 7,
+      "order_date": "2026-01-13",
+      "status": "delivered",
+      "total": 149.97,
+      "items": [
+        {
+          "product_id": "MF-006",
+          "product_name": "Running Sneakers",
+          "quantity": 1,
+          "price": 89.99,
+          "subtotal": 89.99,
+          "size": "9",
+          "color": "White"
+        }
+      ],
+      "shipping_address": "101 Sport Lane, Hyderabad, India"
+    },
+    {
+      "id": 5,
+      "user_id": 8,
+      "order_date": "2026-01-14",
+      "status": "pending",
+      "total": 79.99,
+      "items": [
+        {
+          "product_id": "MF-007",
+          "product_name": "Formal Dress Shirt",
+          "quantity": 1,
+          "price": 79.99,
+          "subtotal": 79.99,
+          "size": "L",
+          "color": "White"
+        }
+      ],
+      "shipping_address": "202 Formal Street, Pune, India"
+    },
+    {
+      "id": 6,
+      "user_id": 9,
+      "order_date": "2026-01-15",
+      "status": "delivered",
+      "total": 199.95,
+      "items": [
+        {
+          "product_id": "MF-010",
+          "product_name": "Striped Polo Shirt",
+          "quantity": 2,
+          "price": 44.99,
+          "subtotal": 89.98,
+          "size": "L",
+          "color": "Blue"
+        }
+      ],
+      "shipping_address": "303 Casual Hub, Chennai, India"
+    },
+    {
+      "id": 7,
+      "user_id": 10,
+      "order_date": "2026-01-16",
+      "status": "shipped",
+      "total": 224.99,
+      "items": [
+        {
+          "product_id": "MF-016",
+          "product_name": "Linen Casual Shirt",
+          "quantity": 2,
+          "price": 55,
+          "subtotal": 110,
+          "size": "M",
+          "color": "White"
+        }
+      ],
+      "shipping_address": "404 Summer Lane, Kolkata, India"
+    },
+    {
+      "id": 8,
+      "user_id": 4,
+      "order_date": "2026-01-17",
+      "status": "delivered",
+      "total": 319.96,
+      "items": [
+        {
+          "product_id": "MF-023",
+          "product_name": "Premium Blue Jeans",
+          "quantity": 1,
+          "price": 99.99,
+          "subtotal": 99.99,
+          "size": "32",
+          "color": "Dark Blue"
+        }
+      ],
+      "shipping_address": "505 Premium Street, Ahmedabad, India"
+    },
+    {
+      "id": 9,
+      "user_id": 5,
+      "order_date": "2026-01-18",
+      "status": "processing",
+      "total": 389.97,
+      "items": [
+        {
+          "product_id": "MF-024",
+          "product_name": "Basketball Shoes",
+          "quantity": 1,
+          "price": 150,
+          "subtotal": 150,
+          "size": "11",
+          "color": "Black"
+        }
+      ],
+      "shipping_address": "606 Sports District, Jaipur, India"
+    },
+    {
+      "id": 10,
+      "user_id": 6,
+      "order_date": "2026-01-19",
+      "status": "pending",
+      "total": 287.98,
+      "items": [
+        {
+          "product_id": "MF-021",
+          "product_name": "Casual Slip-Ons",
+          "quantity": 2,
+          "price": 48,
+          "subtotal": 96,
+          "size": "9",
+          "color": "Black"
+        }
+      ],
+      "shipping_address": "707 Casual Market, Surat, India"
+    },
+    {
+      "id": "ORD-1768890910490",
+      "userId": 0.47245688617652726,
+      "userEmail": "vishal@gmail.com",
+      "date": "2026-01-20",
+      "status": "Processing",
+      "shippingAddress": "bkh, kkkl - 4345566",
+      "shippingMethod": "Express",
+      "totalAmount": 364.97,
+      "items": [
+        {
+          "id": "MF-015",
+          "brand": "StreetStyle",
+          "category": "Shoes",
+          "name": "High-Top Sneakers",
+          "description": "Stylish high-top casual sneakers.",
+          "price": 99.99,
+          "sizes": [
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13"
+          ],
+          "colors": [
+            "White",
+            "Black",
+            "Red"
+          ],
+          "material": "Canvas and rubber",
+          "fit": "True to size",
+          "in_stock": true,
+          "rating": 4.4,
+          "images": [
+            "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200"
+          ],
+          "sku": "STS-HTS-SNK-WHT",
+          "discount": 5,
+          "quantity": 1
+        },
+        {
+          "id": "MF-004",
+          "brand": "StyleMax",
+          "category": "Shirts",
+          "name": "Premium T-Shirt",
+          "description": "Comfort fit premium cotton t-shirt.",
+          "price": 29.99,
+          "sizes": [
+            "S",
+            "M",
+            "L",
+            "XL",
+            "XXL"
+          ],
+          "colors": [
+            "White",
+            "Black",
+            "Gray"
+          ],
+          "material": "100% organic cotton",
+          "fit": "Comfort",
+          "in_stock": true,
+          "rating": 4.3,
+          "images": [
+            "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=1200"
+          ],
+          "sku": "STY-TSH-PR-WHT",
+          "discount": 5,
+          "gender": "female",
+          "color": "White",
+          "quantity": 1,
+          "selectedSize": "XL"
+        },
+        {
+          "offer": "new arrival",
+          "id": "MF-013",
+          "brand": "TrendyWear",
+          "category": "Shirts",
+          "name": "Graphic Print T-Shirt",
+          "description": "Cool graphic print casual t-shirt.",
+          "price": 34.99,
+          "sizes": [
+            "S",
+            "M",
+            "L",
+            "XL"
+          ],
+          "colors": [
+            "White",
+            "Black"
+          ],
+          "material": "100% cotton",
+          "fit": "Regular",
+          "in_stock": true,
+          "rating": 4,
+          "images": [
+            "https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=1200"
+          ],
+          "sku": "TRD-GRP-TSH-WHT",
+          "discount": 15,
+          "gender": "male",
+          "color": "White",
+          "quantity": 1
+        }
+      ],
+      "paymentDetails": {
+        "method": "Card",
+        "txnId": "TXNPBRG7"
+      }
+    },
+    {
+      "id": "ORD-1768896310753",
+      "userId": 0.47245688617652726,
+      "userEmail": "vishal@gmail.com",
+      "date": "2026-01-20",
+      "status": "Processing",
+      "shippingAddress": "at post irla, dharshiv - 434556",
+      "shippingMethod": "Express",
+      "totalAmount": 440,
+      "items": [
+        {
+          "id": "MF-001",
+          "brand": "NordThread",
+          "category": "Shirts",
+          "name": "Cotton Oxford Shirt",
+          "description": "Classic oxford shirt in marine blue, breathable cotton.",
+          "price": 48,
+          "sizes": [
+            "S",
+            "M",
+            "L",
+            "XL",
+            "XXL"
+          ],
+          "colors": [
+            "Navy",
+            "White"
+          ],
+          "material": "100% cotton",
+          "fit": "Regular",
+          "in_stock": true,
+          "rating": 4.5,
+          "images": [
+            "https://th.bing.com/th/id/R.78f3f76921f2cbf78e09366035b9276e?rik=iKRVzJK40Fjfmw&riu=http%3a%2f%2fbrooksbrothers.bynder.com%2fmatch%2fWebName%2fWV01162_WHITE%2fCLASSIC_FIT_COTTON_OXFORD_SHIRT_WHITE%3f%24small%24&ehk=OL0CIHQfOVXl%2bqvgaNQS7T6W0eRBCyL%2fppooF6MZAQ8%3d&risl=&pid=ImgRaw&r=0"
+          ],
+          "sku": "NRT-OXF-NS-NVY",
+          "discount": 10,
+          "gender": "male",
+          "color": "Navy",
+          "quantity": 5,
+          "selectedSize": "XXL"
+        }
+      ],
+      "paymentDetails": {
+        "method": "Card",
+        "last4": "6777",
+        "txnId": "TXNBGJWS"
+      }
+    }
+  ]
+}

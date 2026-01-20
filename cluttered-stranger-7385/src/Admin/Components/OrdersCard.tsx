@@ -1,42 +1,62 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components'
 import users from "../Images/user.png";
-import { Button } from '@chakra-ui/react';
-
-
+import { Button, Select } from '@chakra-ui/react';
 
 interface Users {
-    el: any
- }
+    el: any;
+    onDelete: (id: any) => void;
+    onUpdateStatus: (id: any, status: string) => void;
+}
 
-const OrdersCard = ({el}:Users) => {
-    function randomDate(start:any, end:any){
-        return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-      }
-      
-      const d = randomDate(new Date(2023, 5, 18), new Date(2023,5,28));
-  return (
-    <DIV>
-    <div className='maindiv'>
-    <img  src={el.image || users} />
 
-    <div className='datadiv'>
-    <h1><span>Username: </span>{el.username}</h1>
-    <h2><span>Product Ordered: </span> {el.title || "Product"}</h2>
-    <h1><span>Address: </span>{el.address}</h1>
-    <h1><span>Mobile: </span>{el.mobile}</h1>
-    <h1><span>Product Price: </span>{el.price}</h1>
-    <h1><span>Expected Delivery: </span>{d.toString()}</h1>
-    </div>
 
-    <div className='btndiv' >
-    <Button className='btn'>Edit</Button>
+const OrdersCard = ({ el, onDelete, onUpdateStatus }: Users) => {
+    const navigate = useNavigate();
+    // Ideally use real date from el.date
+    const orderDate = el.date ? new Date(el.date) : new Date();
+    const deliveryDate = new Date(orderDate);
+    deliveryDate.setDate(orderDate.getDate() + 7); // Approx 7 days delivery
 
-    <Button className='btn'>Delete</Button>
-    </div>
-    </div>
-</DIV>
-  )
+    return (
+        <DIV>
+            <div className='maindiv' onClick={() => navigate(`/admin/order/${el.id}`)} style={{ cursor: 'pointer' }}>
+                <img src={el.image || users} alt="Order Item" />
+
+                <div className='datadiv'>
+                    <h1><span>Order ID: </span>{el.id}</h1>
+                    <h1><span>User: </span>{el.username}</h1>
+                    <h2><span>Product: </span> {el.title || "Product"}</h2>
+                    <h1><span>Address: </span>{el.address}</h1>
+                    <h1><span>Mobile: </span>{el.mobile}</h1>
+                    <h1><span>Price: </span>{el.price}</h1>
+                    <h1><span>Date: </span>{el.date}</h1>
+                    <h1><span>Status: </span>
+                        <div onClick={(e) => e.stopPropagation()} style={{ display: 'inline-block' }}>
+                            <Select
+                                size="sm"
+                                value={el.status || "Pending"}
+                                onChange={(e) => onUpdateStatus(el.id, e.target.value)}
+                                width="150px"
+                                borderColor="gray.400"
+                                mt={1}
+                            >
+                                <option value="Pending">Pending</option>
+                                <option value="Shipped">Shipped</option>
+                                <option value="Delivered">Delivered</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </Select>
+                        </div>
+                    </h1>
+                </div>
+
+                <div className='btndiv' onClick={(e) => e.stopPropagation()}>
+                    <Button className='btn' colorScheme="red" size="sm" onClick={() => onDelete(el.id)}>Delete Order</Button>
+                </div>
+            </div>
+        </DIV>
+    )
 }
 
 export default OrdersCard
@@ -46,19 +66,16 @@ const DIV = styled.div`
 
 .maindiv{
     // border: 1px solid;
-    width: 25%;
-    padding: 30px;
-    margin-top:30px;
+    width: 100%;
+    padding: 20px;
+    margin-top:10px;
     border-radius: 20px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-    
-    
-    
+    background: white;
 }
 
 .datadiv {
     text-align: start;
-    
 }
 span{
     font-weight: bold;
@@ -67,23 +84,31 @@ span{
 
 h1{
     padding-top:10px;
+    font-size: 0.9rem;
 }
+h2 {
+    padding-top:10px;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
 .btndiv{
     display: flex;
-    margin: auto;
-    justify-content: space-between;
-    margin-top:30px;
+    justify-content: flex-end;
+    margin-top:20px;
 }
 
 .btn:hover{
-    background-color: red;
-    color: white;
+    transform: scale(1.05);
+    transition: 0.2s;
 }
 
 img{
-    width: 100%;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
 }
-
 
 `

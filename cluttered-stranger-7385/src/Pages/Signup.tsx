@@ -20,7 +20,7 @@ import {
  import { Link, useNavigate } from "react-router-dom";
  import axios from "axios";
  import { ToastContainer, toast } from "react-toastify";
- 
+ import { API_ENDPOINTS } from "../config/api";
 
  
  export default function SignupCard() {
@@ -54,10 +54,7 @@ import {
             email: email,
             password: password
          }
-         // https://cluttered-stranger-backend.onrender.com/users
-         // https://json-example.onrender.com/user
-
-         axios.post(`https://cluttered-stranger-backend.onrender.com/users`,obj).then((res)=> console.log(res)).catch((error)=> console.log(error))
+         axios.post(API_ENDPOINTS.SIGNUP,obj).then((res)=> console.log(res)).catch((error)=> console.log(error))
          toast.success("Sign Up Successfully")
       }
         

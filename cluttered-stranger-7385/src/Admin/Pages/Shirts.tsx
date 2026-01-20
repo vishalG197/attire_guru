@@ -15,7 +15,7 @@ import halt from "../Images/unrecognized.jpg";
 const Shirts = () => {
   const [shirts, setShirts] = useState([]);
 
-  const searchquery = useSelector((store: any) => store.reducer.search);
+  const searchquery = useSelector((store: any) => store.ProductReducer.search);
 
   const isAuth = useSelector((store: any) => store.AuthReducer.isAuth);
 
@@ -47,7 +47,7 @@ const Shirts = () => {
 
   return (
     <>
-    { isAuth && <div>
+      {isAuth && <div>
         <MAINDIV>
           <Breadcrumb
             spacing="8px"
@@ -75,7 +75,7 @@ const Shirts = () => {
         </DIV>
       </div>}
 
-      
+
       <DIV>{!isAuth && <img id="halt" src={halt} />}</DIV>
     </>
   );
@@ -103,19 +103,17 @@ const MAINDIV = styled.div`
 
 const DIV = styled.div`
   // border: 2px solid red;
-
-  width: 75%;
-  margin-left: 350px;
-  margin-top: 50px;
+  width: 100%;
+  margin: auto;
+  margin-top: 20px;
   gap: 30px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 
-  #halt{
+  #halt {
     text-align: center;
     margin-left: 35%;
     margin-top: 150px;
     scale: 1.2;
   }
-  
 `;

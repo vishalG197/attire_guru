@@ -1,223 +1,282 @@
-import { Button } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import styled from "styled-components";
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { useSearchParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getFilterOptions } from '../Redux/ProductReducer/action';
+import { RootState } from '../Constraints/Type';
+import { Dispatch } from 'redux';
+import {
+    Accordion,
+    AccordionItem,
+    AccordionButton,
+    AccordionPanel,
+    AccordionIcon,
+    Box,
+    Checkbox,
+    Stack,
+    Radio,
+    RadioGroup
+} from '@chakra-ui/react';
 
-interface SidebarProps {}
-
-const SidebarContainer = styled.div`
-  width: 200px;
-  padding: 30px;
-  /* background-color: #f2f2f2; */
-  padding-right: 60px;
-  margin-right: 60px;
-  text-align: start;
-  height: fit-content;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-  border-radius : 20px;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  .clearBtn{
-    margin: 10px auto;
-  }
-`;
-
-const Title = styled.h3`
-  font-size: 18px;
-  margin-bottom: 16px;
-`;
-
-const CheckboxContainer = styled.div`
+// ===== styled-components =====
+const SidebarContainer = styled.aside`
+  width: 100%;
+  height: 100%;
+  background-color: white;
   display: flex;
-  align-items: center;
-  margin-bottom: 5px;
-  /* curser:pointer; */
-  cursor: pointer;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
 
-  label {
-    margin-left: 8px;
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #e0e0e0;
+    border-radius: 4px;
   }
 `;
 
-const Sidebar: React.FC<SidebarProps> = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const initialCat = searchParams.getAll("category");
-  const initialGen = searchParams.getAll("gender");
-  const [initialOrder] = searchParams.getAll("order");
-  const initialColor=searchParams.getAll("color")
-  const [category, setCategory] = useState<string[]>(initialCat || []);
-  const [gender, setGender] = useState<string[]>(initialGen || []);
-  const [order, setOrder] = useState<string>(initialOrder || "");
-  const [selectedColors, setSelectedColors] = useState<string[]>(initialColor || []);
-  const colors = ["Maroon", "Black", "Olive", "Multi","Peach","Yellow","Pink","Green","Nevy","White","Blue","Cream","Brown",];
-  useEffect(() => {
-    const params: Partial<{ category: string[]; gender: string[]; order: string ;color: string[]}> = { category, gender ,color: selectedColors};
-    order && (params.order = order);
-    setSearchParams(params);
-  }, [category, gender, order, setSearchParams,selectedColors]);
+const SidebarTitle = styled.h3`
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #f0f0f0;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 
-  const handleGender = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    let newGender = [...gender];
-    if (newGender.includes(value)) {
-      newGender = newGender.filter((el) => el !== value);
-    } else {
-      newGender.push(value);
-    }
-    setGender(newGender);
-  };
+const ClearButton = styled.button`
+  font-size: 12px;
+  color: #d32f2f;
+  background: none;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 4px;
 
-  const handleCategory = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    let newCat = [...category];
-    if (newCat.includes(value)) {
-      newCat = newCat.filter((el) => el !== value);
-    } else {
-      newCat.push(value);
-    }
-    setCategory(newCat);
-  };
+  &:hover {
+    color: #b71c1c;
+  }
+`;
 
-  const handleColor = (e: React.ChangeEvent<HTMLInputElement>) => {
-   const { value } = e.target;
-   let newColors = [...selectedColors];
-   if (newColors.includes(value)) {
-     newColors = newColors.filter((color) => color !== value);
-   } else {
-     newColors.push(value);
-   }
-   setSelectedColors(newColors);
- };
- const handleClearAll = () => {
-   setCategory([]);
-   setGender([]);
-   setOrder("");
-   setSelectedColors([]);
- }
-  return (
-    <SidebarContainer>
-      <Button className="clearBtn" onClick={handleClearAll}>CLEAR ALL</Button>
-      <Title>Filter By Gender</Title>
-      <CheckboxContainer>
-        <input
-          type="checkbox"
-          id="genderCheckboxMale"
-          value="male"
-          onChange={handleGender}
-          checked={gender.includes("male")}
-        />
-        <label htmlFor="genderCheckboxMale">Men</label>
-      </CheckboxContainer>
-      <CheckboxContainer>
-        <input
-          type="checkbox"
-          id="genderCheckboxFemale"
-          value="female"
-          onChange={handleGender}
-          checked={gender.includes("female")}
-        />
-        <label htmlFor="genderCheckboxFemale">Women</label>
-      </CheckboxContainer>
-      
-      <Title>Filter By Color</Title>
-      {colors.map((color) => (
-        <CheckboxContainer key={color}>
-          <input
-            type="checkbox"
-            id={`colorCheckbox_${color}`}
-            value={color}
-            checked={selectedColors.includes(color)}
-            onChange={handleColor}
-          />
-          <label htmlFor={`colorCheckbox_${color}`}>{color}</label>
-        </CheckboxContainer>
-      ))}
-      <Title>Filter By Category</Title>
-      <CheckboxContainer>
-        <input
-          type="checkbox"
-          id="categoryCheckbox1"
-          value="shirt"
-          onChange={handleCategory}
-          checked={category.includes("shirt")}
-        />
-        <label htmlFor="categoryCheckbox1">shirts</label>
-      </CheckboxContainer>
-      <CheckboxContainer>
-        <input
-          type="checkbox"
-          id="categoryCheckbox1"
-          value="kurtas"
-          onChange={handleCategory}
-          checked={category.includes("kurtas")}
-        />
-        <label htmlFor="categoryCheckbox1">kurtas</label>
-      </CheckboxContainer>
-      <CheckboxContainer>
-        <input
-          type="checkbox"
-          id="categoryCheckbox1"
-          value="dress-material"
-          onChange={handleCategory}
-          checked={category.includes("dress-material")}
-        />
-        <label htmlFor="categoryCheckbox1">dress-material</label>
-      </CheckboxContainer>
-      <CheckboxContainer>
-        <input
-          type="checkbox"
-          id="categoryCheckbox1"
-          value="sarees"
-          onChange={handleCategory}
-          checked={category.includes("sarees")}
-        />
-        <label htmlFor="categoryCheckbox1">sarees</label>
-      </CheckboxContainer>
-      <CheckboxContainer>
-        <input
-          type="checkbox"
-          id="categoryCheckbox1"
-          value="jeans"
-          onChange={handleCategory}
-          checked={category.includes("jeans")}
-        />
-        <label htmlFor="categoryCheckbox1">jeans</label>
-      </CheckboxContainer>
-      <CheckboxContainer>
-        <input
-          type="checkbox"
-          id="categoryCheckbox1"
-          value="shoes"
-          onChange={handleCategory}
-          checked={category.includes("shoes")}
-        />
-        <label htmlFor="categoryCheckbox1">shoes</label>
-      </CheckboxContainer>
-      
-      {/* Other category checkboxes go here */}
+const SectionTitle = styled.h4`
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #444;
+`;
 
-      <Title>Sort By</Title>
-      <CheckboxContainer>
-        <input
-          type="checkbox"
-          id="sortingCheckboxAscending"
-          value="asc"
-          onChange={(e) => setOrder(e.target.value)}
-          checked={order === "asc"}
-        />
-        <label htmlFor="sortingCheckboxAscending">Ascending</label>
-      </CheckboxContainer>
-      <CheckboxContainer>
-        <input
-          type="checkbox"
-          id="sortingCheckboxDescending"
-          value="desc"
-          onChange={(e) => setOrder(e.target.value)}
-          checked={order === "desc"}
-        />
-        <label htmlFor="sortingCheckboxDescending">Descending</label>
-      </CheckboxContainer>
-    </SidebarContainer>
-  );
+// Define props based on usage
+interface SidebarProps {
+    onClose?: () => void;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
+    const dispatch: Dispatch<any> = useDispatch();
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    // Get filter options from Redux
+    const filterOptions = useSelector((state: RootState) => state.ProductReducer.filterOptions);
+
+    // Local state for initial load loading?
+    // We can just rely on the data being present or not.
+
+    useEffect(() => {
+        // Load filter options if empty
+        if (!filterOptions?.categories?.length) {
+            dispatch(getFilterOptions());
+        }
+    }, [dispatch, filterOptions?.categories?.length]);
+
+    // Handle Checkbox Change
+    const handleCheckboxChange = (key: string, value: string) => {
+        const currentValues = searchParams.getAll(key);
+        let newValues;
+
+        if (currentValues.includes(value)) {
+            newValues = currentValues.filter((v) => v !== value);
+        } else {
+            newValues = [...currentValues, value];
+        }
+
+        const newParams = new URLSearchParams(searchParams);
+        newParams.delete(key);
+        newValues.forEach((v) => newParams.append(key, v));
+
+        // Reset page on filter change
+        // Since ProductSection handles page reset on param change logic internally based on props/params? 
+        // We just update params here.
+
+        setSearchParams(newParams);
+    };
+
+    // Handle Sort Change (Radio)
+    const handleSortChange = (value: string) => {
+        const newParams = new URLSearchParams(searchParams);
+        if (value) {
+            newParams.set('order', value);
+        } else {
+            newParams.delete('order');
+        }
+        setSearchParams(newParams);
+    };
+
+    // Check if a value is checked
+    const isChecked = (key: string, value: string) => {
+        return searchParams.getAll(key).includes(value);
+    };
+
+    const currentSort = searchParams.get('order') || '';
+
+    const handleClearAll = () => {
+        setSearchParams({});
+    };
+
+    return (
+        <SidebarContainer>
+            <SidebarTitle>
+                Filters
+                {Array.from(searchParams).length > 0 && (
+                    <ClearButton onClick={handleClearAll}>Clear All</ClearButton>
+                )}
+            </SidebarTitle>
+
+            <Accordion defaultIndex={[0, 1, 2, 3]} allowMultiple allowToggle>
+
+                {/* SORTING */}
+                <AccordionItem border="none" mb={4}>
+                    <h2>
+                        <AccordionButton px={0} _hover={{ bg: 'none' }}>
+                            <Box flex="1" textAlign="left">
+                                <SectionTitle>Sort By Price</SectionTitle>
+                            </Box>
+                            <AccordionIcon />
+                        </AccordionButton>
+                    </h2>
+                    <AccordionPanel pb={4} px={0}>
+                        <RadioGroup onChange={handleSortChange} value={currentSort}>
+                            <Stack direction="column">
+                                <Radio value="asc" colorScheme="blue">Price: Low to High</Radio>
+                                <Radio value="desc" colorScheme="blue">Price: High to Low</Radio>
+                            </Stack>
+                        </RadioGroup>
+                    </AccordionPanel>
+                </AccordionItem>
+
+                {/* CATEGORY */}
+                <AccordionItem border="none" mb={4}>
+                    <h2>
+                        <AccordionButton px={0} _hover={{ bg: 'none' }}>
+                            <Box flex="1" textAlign="left">
+                                <SectionTitle>Category</SectionTitle>
+                            </Box>
+                            <AccordionIcon />
+                        </AccordionButton>
+                    </h2>
+                    <AccordionPanel pb={4} px={0}>
+                        <Stack spacing={2} maxH="200px" overflowY="auto">
+                            {filterOptions?.categories?.length ? (
+                                filterOptions.categories.map((cat: string) => (
+                                    <Checkbox
+                                        key={cat}
+                                        isChecked={isChecked('category', cat)}
+                                        onChange={() => handleCheckboxChange('category', cat)}
+                                        colorScheme="blue"
+                                    >
+                                        {cat}
+                                    </Checkbox>
+                                ))
+                            ) : (
+                                // Fallback/Loading
+                                ['shirt', 'jeans', 'shoes', 'kurtas', 'sarees'].map((cat) => (
+                                    <Checkbox
+                                        key={cat}
+                                        isChecked={isChecked('category', cat)}
+                                        onChange={() => handleCheckboxChange('category', cat)}
+                                        colorScheme="blue"
+                                        textTransform="capitalize"
+                                    >
+                                        {cat}
+                                    </Checkbox>
+                                ))
+                            )}
+                        </Stack>
+                    </AccordionPanel>
+                </AccordionItem>
+
+                {/* GENDER */}
+                <AccordionItem border="none" mb={4}>
+                    <h2>
+                        <AccordionButton px={0} _hover={{ bg: 'none' }}>
+                            <Box flex="1" textAlign="left">
+                                <SectionTitle>Gender</SectionTitle>
+                            </Box>
+                            <AccordionIcon />
+                        </AccordionButton>
+                    </h2>
+                    <AccordionPanel pb={4} px={0}>
+                        <Stack spacing={2}>
+                            {(filterOptions?.genders?.length ? filterOptions.genders : ['Men', 'Women']).map((g: string) => (
+                                <Checkbox
+                                    key={g}
+                                    isChecked={isChecked('gender', g)}
+                                    onChange={() => handleCheckboxChange('gender', g)}
+                                    colorScheme="blue"
+                                >
+                                    {g}
+                                </Checkbox>
+                            ))}
+                        </Stack>
+                    </AccordionPanel>
+                </AccordionItem>
+
+                {/* COLORS */}
+                <AccordionItem border="none" mb={4}>
+                    <h2>
+                        <AccordionButton px={0} _hover={{ bg: 'none' }}>
+                            <Box flex="1" textAlign="left">
+                                <SectionTitle>Color</SectionTitle>
+                            </Box>
+                            <AccordionIcon />
+                        </AccordionButton>
+                    </h2>
+                    <AccordionPanel pb={4} px={0}>
+                        <Stack spacing={2} maxH="200px" overflowY="auto">
+                            {filterOptions?.colors?.length ? (
+                                filterOptions.colors.map((c: string) => (
+                                    <Checkbox
+                                        key={c}
+                                        isChecked={isChecked('color', c)}
+                                        onChange={() => handleCheckboxChange('color', c)}
+                                        colorScheme="blue"
+                                    >
+                                        {c}
+                                    </Checkbox>
+                                ))
+                            ) : (
+                                ['Red', 'Blue', 'Green', 'Black', 'White'].map((c) => (
+                                    <Checkbox
+                                        key={c}
+                                        isChecked={isChecked('color', c)}
+                                        onChange={() => handleCheckboxChange('color', c)}
+                                        colorScheme="blue"
+                                    >
+                                        {c}
+                                    </Checkbox>
+                                ))
+                            )}
+                        </Stack>
+                    </AccordionPanel>
+                </AccordionItem>
+
+            </Accordion>
+        </SidebarContainer>
+    );
 };
 
 export default Sidebar;

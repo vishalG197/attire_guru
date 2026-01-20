@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { styled } from 'styled-components';
 
 import halt from "../Images/unrecognized.jpg"
-import { reqUsers } from '../Redux/action';
+import { reqUsers, deleteUser } from '../Redux/action';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Link } from 'react-router-dom';
@@ -12,56 +12,60 @@ import UsersCard from '../Components/UsersCard';
 const Users = () => {
   const isAuth = useSelector((store: any) => store.AuthReducer.isAuth);
 
-  const [users,setUsers] = useState([]);
+  const [users, setUsers] = useState<any[]>([]);
 
-  useEffect(()=>{
-    reqUsers().then((res)=>{
+  useEffect(() => {
+    reqUsers().then((res) => {
       console.log(res.data);
       setUsers(res.data);
     })
-  },[])
+  }, [])
 
-  // console.log(users);
-  
+  const handleDelete = (id: number) => {
+    deleteUser(id).then(() => {
+      setUsers(prev => prev.filter(user => user.id !== id));
+      // Optional: Add toast notification here
+    }).catch(err => console.error(err));
+  };
 
 
   return (
     <DIV>
-  {isAuth && 
-    <div>
-       <MAINDIV>
-        <Breadcrumb
-          spacing="8px"
-          separator={<ChevronRightIcon color="gray.500" />}
-        >
-          <BreadcrumbItem>
-            <BreadcrumbLink>
-              <Link to={"/Dashboard"}>
-                <span>Dashboard</span>
-              </Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
+      {isAuth &&
+        <div>
+          <MAINDIV>
+            <Breadcrumb
+              spacing="8px"
+              separator={<ChevronRightIcon color="gray.500" />}
+            >
+              <BreadcrumbItem>
+                <BreadcrumbLink>
+                  <Link to={"/Dashboard"}>
+                    <span>Dashboard</span>
+                  </Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
 
-          <BreadcrumbItem isCurrentPage>
-            <BreadcrumbLink>
-              <span>Users</span>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-        </Breadcrumb>
-      </MAINDIV>
+              <BreadcrumbItem isCurrentPage>
+                <BreadcrumbLink>
+                  <span>Users</span>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+            </Breadcrumb>
+          </MAINDIV>
 
-      <USERS>
-        {
-            users?.map((el,index)=>(
-              <UsersCard key={index}  el={el} />
-            ))
-        }
-      </USERS>
+          <USERS>
+            {
+              users?.map((el, index) => (
+                <UsersCard key={index} el={el} onDelete={handleDelete} />
+              ))
+            }
+          </USERS>
 
-    </div>
-  }
-  {!isAuth && <img id="halt" src={halt}/>}
-  </DIV>
+        </div>
+      }
+      {!isAuth && <img id="halt" src={halt} />}
+    </DIV>
   )
 }
 
@@ -99,12 +103,10 @@ const DIV = styled.div`
 `
 
 const USERS = styled.div`
-
-// border: 1px solid red;
-width: 70%;
-margin:auto;
-display: grid;
-grid-template-columns: repeat(5,1fr)
-gap:25px;
-
+  // border: 1px solid red;
+  width: 95%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 25px;
 `

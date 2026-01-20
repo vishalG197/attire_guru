@@ -13,9 +13,9 @@ import halt from "../Images/unrecognized.jpg";
 const Shoes = () => {
   const [category, setCat] = useState([]);
 
-  
-  const searchquery = useSelector((store: any)=>store.reducer.search)
-  
+
+  const searchquery = useSelector((store: any) => store.ProductReducer.search)
+
   const isAuth = useSelector((store: any) => store.AuthReducer.isAuth);
 
   const handleDelete = (id: any) => {
@@ -25,61 +25,61 @@ const Shoes = () => {
     });
   };
 
-  
-useEffect(()=>{
-  if(searchquery){
-    const queryObj ={
-      params :{
-        q: searchquery
+
+  useEffect(() => {
+    if (searchquery) {
+      const queryObj = {
+        params: {
+          q: searchquery
+        }
       }
+      getParticularProduct('shoes', queryObj).then((res) => {
+        console.log(res.data);
+        setCat(res.data)
+      })
+
+    } else {
+
+      getParticularProduct('shoes', {}).then((res) => {
+        console.log(res.data);
+        setCat(res.data)
+      })
     }
-    getParticularProduct('shoes',queryObj).then((res)=>{
-      console.log(res.data);
-      setCat(res.data)
-    })
-
-  } else{
-
-    getParticularProduct('shoes',{}).then((res)=>{
-      console.log(res.data);
-      setCat(res.data)
-    })
-  }
-},[searchquery])
+  }, [searchquery])
 
   return (
     <>
 
-    { isAuth && <div>
+      {isAuth && <div>
 
-      <MAINDIV>
-        <Breadcrumb
-          spacing="8px"
-          separator={<ChevronRightIcon color="gray.500" />}
-        >
-          <BreadcrumbItem>
-            <BreadcrumbLink>
-              <Link to={"/Dashboard"}>
-                <span>Dashboard</span>
-              </Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
+        <MAINDIV>
+          <Breadcrumb
+            spacing="8px"
+            separator={<ChevronRightIcon color="gray.500" />}
+          >
+            <BreadcrumbItem>
+              <BreadcrumbLink>
+                <Link to={"/Dashboard"}>
+                  <span>Dashboard</span>
+                </Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
 
-          <BreadcrumbItem isCurrentPage>
-            <BreadcrumbLink>
-              <span>Shoes</span>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-        </Breadcrumb>
-      </MAINDIV>
-      <DIV>
-        {category?.map((el, i) => (
-          <ProductCard el={el} key={i} handleDelete={handleDelete} />
+            <BreadcrumbItem isCurrentPage>
+              <BreadcrumbLink>
+                <span>Shoes</span>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+          </Breadcrumb>
+        </MAINDIV>
+        <DIV>
+          {category?.map((el, i) => (
+            <ProductCard el={el} key={i} handleDelete={handleDelete} />
           ))}
-      </DIV>
-          </div>}
+        </DIV>
+      </div>}
 
-          
+
       <DIV>{!isAuth && <img id="halt" src={halt} />}</DIV>
     </>
   );
@@ -107,15 +107,14 @@ const MAINDIV = styled.div`
 
 const DIV = styled.div`
   // border: 2px solid red;
-
-  width: 75%;
-  margin-left: 350px;
-  margin-top: 50px;
+  width: 100%;
+  margin: auto;
+  margin-top: 20px;
   gap: 30px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 
-  #halt{
+  #halt {
     text-align: center;
     margin-left: 35%;
     margin-top: 150px;

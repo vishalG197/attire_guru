@@ -1,10 +1,16 @@
 import { productState ,productAction,Iproduct} from "../../Constraints/Type";
 import { PRODUCTS_FAILURE, PRODUCTS_REQUEST, GET_PRODUCTS_SUCCESS ,POST_PRODUCTS_SUCCESS, DELETE_PRODUCT_SUCCESS, EDIT_PRODUCT_SUCCESS} from "../actiontype";
+
 export const initialState:productState={
   isLoading: false,
-   isError: false,
+  isError: false,
   product:[],
-  totalPage:0
+  totalPage:0,
+  filterOptions: {
+    categories: [],
+    genders: [],
+    colors: [],
+  },
  };
 
 const ProductReducer: any = (
@@ -20,6 +26,12 @@ const ProductReducer: any = (
    case GET_PRODUCTS_SUCCESS : {
       return {
          ...state,...payload
+      }
+   }
+   case 'SET_FILTER_OPTIONS' : {
+      return {
+         ...state,
+         filterOptions: payload
       }
    }
    case POST_PRODUCTS_SUCCESS : {

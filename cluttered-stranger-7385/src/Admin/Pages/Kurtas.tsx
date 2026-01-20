@@ -12,7 +12,7 @@ const Kurtas = () => {
   const [kurtas, setKurtas] = useState([]);
   const isAuth = useSelector((store: any) => store.AuthReducer.isAuth);
 
-  const searchquery = useSelector((store: any) => store.reducer.search);
+  const searchquery = useSelector((store: any) => store.ProductReducer.search);
 
   const handleDelete = (id: any) => {
     deleteProduct(id).then(() => {
@@ -42,7 +42,7 @@ const Kurtas = () => {
 
   return (
     <>
-    { isAuth &&  <div>
+      {isAuth && <div>
         <MAINDIV>
           <Breadcrumb
             spacing="8px"
@@ -71,7 +71,7 @@ const Kurtas = () => {
         </DIV>
       </div>}
 
-      
+
       <DIV>{!isAuth && <img id="halt" src={halt} />}</DIV>
     </>
   );

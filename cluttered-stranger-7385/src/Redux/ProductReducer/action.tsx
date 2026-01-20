@@ -3,6 +3,7 @@
 import axios from "axios";
 import { PRODUCTS_FAILURE, PRODUCTS_REQUEST, GET_PRODUCTS_SUCCESS,POST_PRODUCTS_SUCCESS,   } from "../actiontype";
 import { MyObject, productAction } from "../../Constraints/Type";
+import { API_ENDPOINTS } from "../../config/api";
 
 import { Dispatch } from 'redux';
 
@@ -35,7 +36,7 @@ interface ProductsRequestAction {
         dispatch<ProductsRequestAction>({ type: PRODUCTS_REQUEST });
     
         try {
-          const response = await axios.get('https://cluttered-stranger-backend.onrender.com/products',obj);
+          const response = await axios.get(API_ENDPOINTS.PRODUCTS,obj);
           const totalPages = Math.ceil(response.headers['x-total-count'] / 16);
     console.log(response.data,totalPages,obj)
           dispatch<GetProductsSuccessAction>({
@@ -55,6 +56,34 @@ interface ProductsRequestAction {
         }
       };
     };
+
+// Fetch filter options from all products
+export const getFilterOptions = () => {
+  return async (dispatch: any): Promise<void> => {
+    try {
+      const response = await axios.get(`${API_ENDPOINTS.PRODUCTS}`);
+      const products = response.data;
+
+      // Extract unique values for filter options using Array.from()
+      const categories = Array.from(new Set(products.map((p: any) => p.category))).sort();
+      const genders = Array.from(new Set(products.map((p: any) => p.gender))).sort();
+      const colors = Array.from(new Set(products.map((p: any) => p.color))).sort();
+
+      console.log('Filter options loaded:', { categories, genders, colors });
+
+      dispatch({
+        type: 'SET_FILTER_OPTIONS',
+        payload: {
+          categories,
+          genders,
+          colors,
+        },
+      });
+    } catch (error: any) {
+      console.error('Error fetching filter options:', error.message);
+    }
+  };
+};
 
 // export const Editproduct=(id)=>{
 //   return (dispatch)=>{ 

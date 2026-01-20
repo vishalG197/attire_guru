@@ -12,7 +12,7 @@ import halt from "../Images/unrecognized.jpg";
 const Jeans = () => {
   const [category, setCat] = useState([]);
 
-  const searchquery = useSelector((store: any) => store.reducer.search);
+  const searchquery = useSelector((store: any) => store.ProductReducer.search);
   const isAuth = useSelector((store: any) => store.AuthReducer.isAuth);
 
   const handleDelete = (id: any) => {
@@ -100,25 +100,17 @@ const MAINDIV = styled.div`
 
 const DIV = styled.div`
   // border: 2px solid red;
-
-  width: 75%;
-  margin-left: 350px;
-  margin-top: 50px;
+  width: 100%;
+  margin: auto;
+  margin-top: 20px;
   gap: 30px;
   display: grid;
-  grid-template-columns:
-    repeat(3, 1fr)
-    #halt {
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+
+  #halt {
     text-align: center;
     margin-left: 35%;
     margin-top: 150px;
-    scale: 1.2;
-  }
-
-  #halt{
-    text-align: center;
-    margin-left: 20%;
-    margin-top: 100px;
     scale: 1.2;
   }
 `;

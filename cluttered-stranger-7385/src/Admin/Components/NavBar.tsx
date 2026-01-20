@@ -19,32 +19,32 @@ import { useDispatch, useSelector } from "react-redux";
 import { LOGIN, LOGOUT, SEARCH_PRODUCT } from "../Redux/actionType";
 
 const NavBar = () => {
-  
-  const [search ,setSearch] = useState('');
-  const isAuth = useSelector((store: any)=>store.AuthReducer.isAuth)
-  const username = useSelector((store: any)=>store.AuthReducer.username)
-  
+
+  const [search, setSearch] = useState('');
+  const isAuth = useSelector((store: any) => store.AuthReducer.isAuth)
+  const username = useSelector((store: any) => store.AuthReducer.username)
+
   const dispatch = useDispatch()
 
   const navigate = useNavigate();
 
-  
-  const handleSearch =(e:React.ChangeEvent<HTMLInputElement> )=>{
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value)
-    dispatch({type: SEARCH_PRODUCT, payload: e.target.value})
+    dispatch({ type: SEARCH_PRODUCT, payload: e.target.value })
   }
 
-  const handleLogOut =()=>{
+  const handleLogOut = () => {
     console.log("hi");
-    dispatch({type: LOGOUT})
+    dispatch({ type: LOGOUT })
     localStorage.clear();
-    
+
   }
-  const handleLogin =()=>{
+  const handleLogin = () => {
     navigate(`/Login`)
   }
-  
-  
+
+
 
   return (
     <DIV>
@@ -53,7 +53,7 @@ const NavBar = () => {
           <Link to={"/Dashboard"} id="logo">
             <img src={logo} />
           </Link>
-          <input placeholder="Search here" value={search} onChange={handleSearch}/>
+          <input placeholder="Search here" value={search} onChange={handleSearch} />
         </div>
 
         <div id="nav-1-2">
@@ -70,10 +70,10 @@ const NavBar = () => {
                 <div className="dropdown" style={{ float: "right" }}>
                   <button className="dropbtn">
                     <img
-                      src={username === "saurabh"? saurabh : username === 'vishal'? vishal : username === 'murad'? murad : 'Username'}
+                      src={username === "saurabh" ? saurabh : username === 'vishal' ? vishal : username === 'murad' ? murad : 'Username'}
                       style={{ width: "22%", borderRadius: "50%" }}
                     />{" "}
-                    {username === "saurabh" ? "SB" : username === "vishal" ? "VG": username === "murad"? "MK": "username"}
+                    {username === "saurabh" ? "SB" : username === "vishal" ? "VG" : username === "murad" ? "MK" : "username"}
                   </button>
                   <div className="dropdown-content">
                     <a href="#">
