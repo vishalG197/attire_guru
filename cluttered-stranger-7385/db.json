@@ -1055,25 +1055,6 @@
       "shipping_address": "123 Fashion Lane, Mumbai, India"
     },
     {
-      "id": 2,
-      "user_id": 5,
-      "order_date": "2026-01-11",
-      "status": "processing",
-      "total": 189.98,
-      "items": [
-        {
-          "product_id": "MF-003",
-          "product_name": "Urban Hike Boots",
-          "quantity": 1,
-          "price": 120,
-          "subtotal": 120,
-          "size": "10",
-          "color": "Brown"
-        }
-      ],
-      "shipping_address": "456 Shoe Street, Delhi, India"
-    },
-    {
       "id": 3,
       "user_id": 6,
       "order_date": "2026-01-12",
@@ -1210,7 +1191,7 @@
       "id": 10,
       "user_id": 6,
       "order_date": "2026-01-19",
-      "status": "pending",
+      "status": "Cancelled",
       "total": 287.98,
       "items": [
         {
@@ -1230,7 +1211,7 @@
       "userId": 0.47245688617652726,
       "userEmail": "vishal@gmail.com",
       "date": "2026-01-20",
-      "status": "Processing",
+      "status": "Shipped",
       "shippingAddress": "bkh, kkkl - 4345566",
       "shippingMethod": "Express",
       "totalAmount": 364.97,
@@ -1342,7 +1323,7 @@
       "userId": 0.47245688617652726,
       "userEmail": "vishal@gmail.com",
       "date": "2026-01-20",
-      "status": "Processing",
+      "status": "Delivered",
       "shippingAddress": "at post irla, dharshiv - 434556",
       "shippingMethod": "Express",
       "totalAmount": 440,

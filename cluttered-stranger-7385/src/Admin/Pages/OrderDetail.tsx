@@ -20,18 +20,27 @@ import {
     Stack,
     StackDivider,
     Grid,
-    GridItem
+    GridItem,
+    Spinner,
+    Center,
+    Alert,
+    AlertIcon,
+    Button
 } from '@chakra-ui/react';
-import { ChevronRightIcon } from '@chakra-ui/icons';
+import { ChevronRightIcon, ArrowBackIcon } from '@chakra-ui/icons';
 import { styled } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const OrderDetail = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const toast = useToast();
     const [order, setOrder] = useState<any>(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         if (id) {
+            setIsLoading(true);
             getSingleOrder(id)
                 .then((res) => {
                     setOrder(res.data);
@@ -39,11 +48,14 @@ const OrderDetail = () => {
                 .catch((err) => {
                     console.error(err);
                     toast({
-                        title: 'Error fetching order',
+                        title: 'Error Loading Order',
+                        description: 'Failed to fetch order details',
                         status: 'error',
-                        duration: 3000,
+                        duration: 4000,
+                        isClosable: true,
                     });
-                });
+                })
+                .finally(() => setIsLoading(false));
         }
     }, [id, toast]);
 
@@ -53,23 +65,50 @@ const OrderDetail = () => {
             .then(() => {
                 setOrder((prev: any) => ({ ...prev, status: newStatus }));
                 toast({
-                    title: 'Order status updated',
+                    title: 'Status Updated Successfully',
+                    description: `Order status changed to ${newStatus}`,
                     status: 'success',
                     duration: 3000,
+                    isClosable: true,
                 });
             })
             .catch((err) => {
                 console.error(err);
                 toast({
-                    title: 'Error updating status',
+                    title: 'Update Failed',
+                    description: 'Could not update order status',
                     status: 'error',
                     duration: 3000,
+                    isClosable: true,
                 });
             });
     };
 
+    if (isLoading) {
+        return (
+            <Container maxW="container.xl" py={5}>
+                <Center py={20}>
+                    <VStack spacing={4}>
+                        <Spinner size="xl" color="blue.500" thickness="4px" />
+                        <Text>Loading order details...</Text>
+                    </VStack>
+                </Center>
+            </Container>
+        );
+    }
+
     if (!order) {
-        return <Container>Loading...</Container>;
+        return (
+            <Container maxW="container.xl" py={5}>
+                <Alert status="error" borderRadius="md">
+                    <AlertIcon />
+                    Order not found
+                </Alert>
+                <Button mt={4} leftIcon={<ArrowBackIcon />} onClick={() => navigate('/admin/Orders')}>
+                    Back to Orders
+                </Button>
+            </Container>
+        );
     }
 
     return (
@@ -77,14 +116,10 @@ const OrderDetail = () => {
             <MAINDIV>
                 <Breadcrumb spacing="8px" separator={<ChevronRightIcon color="gray.500" />}>
                     <BreadcrumbItem>
-                        <BreadcrumbLink>
-                            <Link to="/admin/Dashboard">Dashboard</Link>
-                        </BreadcrumbLink>
+                        <BreadcrumbLink as={Link} to="/admin/Dashboard">Dashboard</BreadcrumbLink>
                     </BreadcrumbItem>
                     <BreadcrumbItem>
-                        <BreadcrumbLink>
-                            <Link to="/admin/Orders">Orders</Link>
-                        </BreadcrumbLink>
+                        <BreadcrumbLink as={Link} to="/admin/Orders">Orders</BreadcrumbLink>
                     </BreadcrumbItem>
                     <BreadcrumbItem isCurrentPage>
                         <BreadcrumbLink>
@@ -94,37 +129,49 @@ const OrderDetail = () => {
                 </Breadcrumb>
             </MAINDIV>
 
-            <Grid templateColumns={{ base: "1fr", md: "2fr 1fr" }} gap={6} mt={8}>
+            <HStack justify="space-between" my={6}>
+                <Heading size="lg">Order Details</Heading>
+                <Button leftIcon={<ArrowBackIcon />} variant="outline" onClick={() => navigate('/admin/Orders')}>
+                    Back to Orders
+                </Button>
+            </HStack>
+
+            <Grid templateColumns={{ base: "1fr", md: "2fr 1fr" }} gap={6}>
                 <GridItem>
-                    <Card variant="outline">
+                    <Card variant="outline" bg="white">
                         <CardBody>
                             <Heading size="md" mb={4}>Order Items</Heading>
-                            <Stack divider={<StackDivider />} spacing={4}>
-                                {order.products?.map((prod: any, index: number) => (
-                                    <HStack key={index} spacing={4} align="start">
-                                        <Image
-                                            src={prod.image}
-                                            alt={prod.title}
-                                            boxSize="100px"
-                                            objectFit="cover"
-                                            borderRadius="md"
-                                        />
-                                        <VStack align="start" spacing={1} flex={1}>
-                                            <Heading size="sm">{prod.title}</Heading>
-                                            <Text fontSize="sm" color="gray.600">Category: {prod.category}</Text>
-                                            <Text fontSize="sm">Quantity: {prod.quantity || 1}</Text>
-                                            <Text fontWeight="bold">₹ {prod.price}</Text>
-                                        </VStack>
-                                    </HStack>
-                                ))}
-                            </Stack>
+                            {order.products && order.products.length > 0 ? (
+                                <Stack divider={<StackDivider />} spacing={4}>
+                                    {order.products.map((prod: any, index: number) => (
+                                        <HStack key={index} spacing={4} align="start">
+                                            <Image
+                                                src={prod.image}
+                                                alt={prod.title}
+                                                boxSize="100px"
+                                                objectFit="cover"
+                                                borderRadius="md"
+                                                fallbackSrc="https://via.placeholder.com/100"
+                                            />
+                                            <VStack align="start" spacing={1} flex={1}>
+                                                <Heading size="sm">{prod.title}</Heading>
+                                                <Text fontSize="sm" color="gray.600">Category: {prod.category}</Text>
+                                                <Text fontSize="sm">Quantity: {prod.quantity || 1}</Text>
+                                                <Text fontWeight="bold">₹ {prod.price}</Text>
+                                            </VStack>
+                                        </HStack>
+                                    ))}
+                                </Stack>
+                            ) : (
+                                <Text color="gray.500">No product details available</Text>
+                            )}
                         </CardBody>
                     </Card>
                 </GridItem>
 
                 <GridItem>
                     <VStack spacing={6} align="stretch">
-                        <Card variant="outline">
+                        <Card variant="outline" bg="white">
                             <CardBody>
                                 <Heading size="md" mb={4}>Order Summary</Heading>
                                 <Stack spacing={3}>
@@ -138,12 +185,14 @@ const OrderDetail = () => {
                                     </HStack>
                                     <HStack justify="space-between">
                                         <Text>Total Amount:</Text>
-                                        <Text fontWeight="bold" fontSize="lg" color="green.600">₹ {order.total_price || order.price}</Text>
+                                        <Text fontWeight="bold" fontSize="lg" color="green.600">
+                                            ₹ {order.total_price || order.price}
+                                        </Text>
                                     </HStack>
                                     <Box pt={4}>
-                                        <Text mb={2}>Status:</Text>
+                                        <Text mb={2} fontWeight="semibold">Status:</Text>
                                         <Select
-                                            value={order.status}
+                                            value={order.status || "Pending"}
                                             onChange={handleStatusChange}
                                             bg={
                                                 order.status === 'Delivered' ? 'green.100' :
@@ -161,12 +210,13 @@ const OrderDetail = () => {
                             </CardBody>
                         </Card>
 
-                        <Card variant="outline">
+                        <Card variant="outline" bg="white">
                             <CardBody>
                                 <Heading size="md" mb={4}>Customer Details</Heading>
                                 <Stack spacing={3}>
                                     <Text><strong>Name:</strong> {order.username || 'Guest'}</Text>
                                     <Text><strong>Address:</strong> {order.address || 'N/A'}</Text>
+                                    {order.mobile && <Text><strong>Mobile:</strong> {order.mobile}</Text>}
                                 </Stack>
                             </CardBody>
                         </Card>

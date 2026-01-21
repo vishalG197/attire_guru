@@ -1,30 +1,27 @@
 import React from 'react';
 import {
+    Box,
     Flex,
-    Text,
-    IconButton,
     Avatar,
     Menu,
     MenuButton,
     MenuList,
     MenuItem,
     MenuDivider,
+    Text,
+    IconButton,
     useColorModeValue,
-    Box,
-    Image
 } from '@chakra-ui/react';
-import { FiMenu, FiBell, FiChevronDown } from 'react-icons/fi';
-import { useDispatch, useSelector } from 'react-redux';
-import { LOGOUT } from '../../Redux/actiontype';
+import { FiBell, FiChevronDown } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
-
-// You can import the logo image if you want to use it alongside text
-// import logo from "../Images/Icons/logo-new.png"; 
+import { useDispatch } from 'react-redux';
+import { LOGOUT } from '../../Redux/actiontype';
 
 const AdminNavbar = () => {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
-    const username = useSelector((store: any) => store.AuthReducer.username) || "Admin";
+    const dispatch = useDispatch();
+    const bg = useColorModeValue('white', 'gray.800');
+    const borderColor = useColorModeValue('gray.200', 'gray.700');
 
     const handleLogout = () => {
         dispatch({ type: LOGOUT });
@@ -33,77 +30,69 @@ const AdminNavbar = () => {
     };
 
     return (
-        <Flex
-            ml={{ base: 0, md: 0 }}
-            px={{ base: 4, md: 4 }}
-            height="20"
-            alignItems="center"
-            bg={useColorModeValue('white', 'gray.900')}
+        <Box
+            bg={bg}
+            px={4}
             borderBottomWidth="1px"
-            borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
-            justifyContent={{ base: 'space-between', md: 'space-between' }}
+            borderBottomColor={borderColor}
             position="sticky"
-            top="0"
-            zIndex="sticky"
+            top={0}
+            zIndex={10}
         >
-            {/* Logo Section */}
-            <Text
-                display={{ base: 'flex', md: 'none' }}
-                fontSize="2xl"
-                fontFamily="monospace"
-                fontWeight="bold"
-            >
-                Attire Guru
-            </Text>
+            <Flex h={16} alignItems="center" justifyContent="flex-end">
+                {/* Right side - Notifications and Profile */}
+                <Flex alignItems="center" gap={4}>
+                    {/* Notification Icon */}
+                    <IconButton
+                        size="lg"
+                        variant="ghost"
+                        aria-label="Notifications"
+                        icon={<FiBell />}
+                    />
 
-            {/* Logo moved to Sidebar for Desktop */}
-
-
-            <Flex alignItems={'center'}>
-                <IconButton
-                    size="lg"
-                    variant="ghost"
-                    aria-label="open menu"
-                    icon={<FiBell />}
-                    android-aria-label="notifications"
-                />
-                <Flex alignItems={'center'}>
+                    {/* Profile Menu */}
                     <Menu>
                         <MenuButton
                             py={2}
                             transition="all 0.3s"
                             _focus={{ boxShadow: 'none' }}
                         >
-                            <Flex alignItems={'center'}>
+                            <Flex alignItems="center" gap={2}>
                                 <Avatar
-                                    size={'sm'}
-                                    src={
-                                        'https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
-                                    }
+                                    size="sm"
+                                    name="Admin"
+                                    bg="teal.500"
                                 />
                                 <Box display={{ base: 'none', md: 'flex' }} alignItems="center">
-                                    <Text fontSize="sm" fontWeight="600" ml="2">
-                                        {username}
+                                    <Text fontSize="sm" fontWeight="medium">
+                                        Admin
                                     </Text>
-                                    <Box ml="2">
-                                        <FiChevronDown />
-                                    </Box>
+                                    <FiChevronDown />
                                 </Box>
                             </Flex>
                         </MenuButton>
-                        <MenuList
-                            bg={useColorModeValue('white', 'gray.900')}
-                            borderColor={useColorModeValue('gray.200', 'gray.700')}
-                        >
-                            <MenuItem>Profile</MenuItem>
-                            <MenuItem>Settings</MenuItem>
+                        <MenuList>
+                            <MenuItem onClick={() => navigate('/admin/Dashboard')}>
+                                Dashboard
+                            </MenuItem>
+                            <MenuItem onClick={() => navigate('/admin/Users')}>
+                                Users
+                            </MenuItem>
+                            <MenuItem onClick={() => navigate('/admin/AllProducts')}>
+                                Products
+                            </MenuItem>
+                            <MenuItem onClick={() => navigate('/admin/Orders')}>
+                                Orders
+                            </MenuItem>
                             <MenuDivider />
-                            <MenuItem onClick={handleLogout}>Sign out</MenuItem>
+                            <MenuItem onClick={handleLogout} color="red.500">
+                                Logout
+                            </MenuItem>
                         </MenuList>
                     </Menu>
                 </Flex>
             </Flex>
-        </Flex>
+        </Box>
     );
 };
 

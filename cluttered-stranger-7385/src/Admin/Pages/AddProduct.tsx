@@ -1,289 +1,438 @@
 import React, { useState } from "react";
-import { styled } from "styled-components";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, useToast } from "@chakra-ui/react";
-import { ChevronRightIcon } from "@chakra-ui/icons";
+import {
+  Box,
+  Button,
+  Container,
+  FormControl,
+  FormLabel,
+  Input,
+  Select,
+  VStack,
+  HStack,
+  Heading,
+  useToast,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  SimpleGrid,
+  Image,
+  Text,
+  Textarea,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
+  Card,
+  CardBody,
+  Divider,
+  FormHelperText,
+  Icon
+} from "@chakra-ui/react";
+import { ChevronRightIcon, CheckCircleIcon } from "@chakra-ui/icons";
 import { Link, useNavigate } from "react-router-dom";
 import { addNewProduct } from "../Redux/action";
-import random from "../Images/random.jpg";
 import { useSelector } from "react-redux";
-import halt from "../Images/unrecognized.jpg"
+import { styled } from "styled-components";
 
 const initial = {
-  title: "",
-  image: "",
+  name: "",
+  images: [""],
   category: "",
   color: "",
   description: "",
   price: 0,
   gender: "",
   brand: "",
-  fabric: "",
+  material: "",
   fit: "",
   pattern: "",
   rating: 0,
+  sizes: ""
 };
 
 const AddProduct = () => {
-  const [singleProd, setNewData] = useState(initial);
-
+  const [formData, setFormData] = useState(initial);
+  const [isLoading, setIsLoading] = useState(false);
   const isAuth = useSelector((store: any) => store.AuthReducer.isAuth);
-
   const navigate = useNavigate();
-
-  const toast = useToast()
+  const toast = useToast();
 
   const handleChange = (
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
-    const { name, type, value } = e.target;
-    const updatedData = {
-      ...singleProd,
-      [name]: name === "price" ? +value : value,
-    };
-
-    setNewData(updatedData);
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: name === "price" || name === "rating" ? +value : value
+    }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleNumberChange = (name: string, value: number) => {
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(singleProd);
 
-    addNewProduct(singleProd).then((res) => {
-      console.log(res.data);
-
+    // Basic validation
+    if (!formData.name || !formData.category || !formData.price) {
       toast({
-        title: `Product Added Successfully !`,
-        description: "One Product got added !",
-        status: 'success',
-        duration: 4000,
+        title: "Missing Required Fields",
+        description: "Please fill in Product Name, Category, and Price",
+        status: "warning",
+        duration: 3000,
         isClosable: true,
+      });
+      return;
+    }
+
+    setIsLoading(true);
+    addNewProduct(formData)
+      .then(() => {
+        toast({
+          title: "Product Added Successfully!",
+          description: "Your new product has been added to the inventory",
+          status: "success",
+          duration: 4000,
+          isClosable: true,
+        });
+        setFormData(initial); // Reset form
+        navigate("/admin/AllProducts");
       })
-
-      navigate(`/AllProducts`)
-    });
+      .catch((err) => {
+        console.error(err);
+        toast({
+          title: "Error Adding Product",
+          description: "Something went wrong. Please try again.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      })
+      .finally(() => setIsLoading(false));
   };
+
+  if (!isAuth) {
+    return (
+      <Box textAlign="center" mt="150px">
+        <Text fontSize="xl">Authentication Required</Text>
+      </Box>
+    );
+  }
+
   return (
-    <>
-      {isAuth && <div>
-        <MAINDIV>
-          <Breadcrumb
-            spacing="8px"
-            separator={<ChevronRightIcon color="gray.500" />}
-          >
-            <BreadcrumbItem>
-              <BreadcrumbLink>
-                <Link to={"/Dashboard"}>
-                  <span>Dashboard</span>
-                </Link>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
+    <Container maxW="container.xl" py={5}>
+      <MAINDIV>
+        <Breadcrumb spacing="8px" separator={<ChevronRightIcon color="gray.500" />}>
+          <BreadcrumbItem>
+            <BreadcrumbLink as={Link} to="/admin/Dashboard">
+              Dashboard
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbItem>
+            <BreadcrumbLink as={Link} to="/admin/AllProducts">
+              All Products
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbItem isCurrentPage>
+            <BreadcrumbLink>Add New Product</BreadcrumbLink>
+          </BreadcrumbItem>
+        </Breadcrumb>
+      </MAINDIV>
 
-            <BreadcrumbItem isCurrentPage>
-              <BreadcrumbLink>
-                <span>Add New Product</span>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-          </Breadcrumb>
-        </MAINDIV>
+      <Heading my={6} size="lg" textAlign="center">
+        Add New Product
+      </Heading>
 
-        <DIV>
-
-          <img id="random" src={random} />
-
-          <form id="form" onSubmit={handleSubmit}>
-            <div className="inp">
-              <label>Title: </label>
-              <input
-                placeholder="Title"
-                size={50}
-                type={"text"}
-                value={singleProd.title}
-                name={"title"}
-                onChange={handleChange}
-              />
-              <br />
-            </div>
-
-            <div className="inp">
-              <label>Image Url: </label>
-              <input
-                placeholder="Image URL"
-                size={50}
-                type={"text"}
-                value={singleProd.image}
-                name={"image"}
-                onChange={handleChange}
-              />
-              <br />
-            </div>
-
-            <div className="inp">
-              <label>Category: </label>
-              <input
-                placeholder="Category"
-                size={50}
-                type={"text"}
-                value={singleProd.category}
-                name={"category"}
-                onChange={handleChange}
-              />
-              <br />
-            </div>
-
-            <div className="inp">
-              <label>Color: </label>
-              <input
-                placeholder="Color"
-                size={50}
-                type={"text"}
-                value={singleProd.color}
-                name={"color"}
-                onChange={handleChange}
-              />
-              <br />
-            </div>
-
-            <div className="inp">
-              <label>Description: </label>
-              <input
-                placeholder="Description"
-                size={50}
-                type={"text"}
-                value={singleProd.description}
-                name={"description"}
-                onChange={handleChange}
-              />
-              <br />
-            </div>
-
-            <div className="inp">
-              <label>Price: </label>
-              <input
-                placeholder="Price"
-                size={50}
-                type={"number"}
-                value={singleProd.price}
-                name={"price"}
-                onChange={handleChange}
-              />
-              <br />
-            </div>
-
-            <div className="inp">
-              <label>Gender: </label>
-              <select
-                onChange={handleChange}
-                value={singleProd.gender}
-                name="gender"
+      <SimpleGrid columns={{ base: 1, lg: 2 }} gap={8} alignItems="start">
+        {/* Left Side: Image Preview */}
+        <Card variant="outline" bg="white">
+          <CardBody>
+            <VStack spacing={4}>
+              <Heading size="md">Product Preview</Heading>
+              <Box
+                width="100%"
+                height="300px"
+                bg="gray.50"
+                borderRadius="lg"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                overflow="hidden"
+                borderWidth="2px"
+                borderStyle="dashed"
+                borderColor="gray.300"
               >
-                <option value={""}>Select Gender</option>
-                <option value={"male"}>Male</option>
-                <option value={"female"}>Female</option>
-              </select>
-              <br />
-            </div>
+                {formData.images && formData.images[0] ? (
+                  <Image
+                    src={formData.images[0]}
+                    alt="Product Preview"
+                    maxH="100%"
+                    maxW="100%"
+                    objectFit="contain"
+                    fallbackSrc="https://via.placeholder.com/300?text=Invalid+Image"
+                  />
+                ) : (
+                  <Text color="gray.400" fontSize="lg">
+                    Image preview will appear here
+                  </Text>
+                )}
+              </Box>
+              {formData.name && (
+                <VStack align="start" width="100%" spacing={2}>
+                  <Text fontSize="xl" fontWeight="bold">
+                    {formData.name}
+                  </Text>
+                  {formData.price > 0 && (
+                    <Text fontSize="2xl" color="green.600" fontWeight="bold">
+                      ₹ {formData.price}
+                    </Text>
+                  )}
+                  {formData.description && (
+                    <Text fontSize="sm" color="gray.600">
+                      {formData.description}
+                    </Text>
+                  )}
+                </VStack>
+              )}
+            </VStack>
+          </CardBody>
+        </Card>
 
-            <div className="inp">
-              <label>Brand: </label>
-              <input
-                placeholder="Brand"
-                size={50}
-                type={"text"}
-                value={singleProd.brand}
-                name={"brand"}
-                onChange={handleChange}
-              />
-              <br />
-            </div>
+        {/* Right Side: Form */}
+        <Card variant="outline" bg="white">
+          <CardBody>
+            <form onSubmit={handleSubmit}>
+              <VStack spacing={4} align="stretch">
+                <Heading size="md" mb={2}>Product Information</Heading>
 
-            <div className="inp">
-              <label>Fabric: </label>
-              <input
-                placeholder="Fabric"
-                size={50}
-                type={"text"}
-                value={singleProd.fabric}
-                name={"fabric"}
-                onChange={handleChange}
-              />
-              <br />
-            </div>
+                {/* Basic Info */}
+                <FormControl isRequired>
+                  <FormLabel>Product Name</FormLabel>
+                  <Input
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Enter product name"
+                  />
+                </FormControl>
 
-            <div className="inp">
-              <label>Fit: </label>
-              <input
-                placeholder="Fit"
-                size={50}
-                type={"text"}
-                value={singleProd.fit}
-                name={"fit"}
-                onChange={handleChange}
-              />
-              <br />
-            </div>
+                <FormControl isRequired>
+                  <FormLabel>Image URL</FormLabel>
+                  <Input
+                    name="image"
+                    value={formData.images[0] || ""}
+                    onChange={(e) => {
+                      setFormData(prev => ({
+                        ...prev,
+                        images: [e.target.value]
+                      }));
+                    }}
+                    placeholder="https://example.com/image.jpg"
+                  />
+                  <FormHelperText>Enter a valid image URL</FormHelperText>
+                </FormControl>
 
-            <div className="inp">
-              <label>Pattern: </label>
-              <input
-                placeholder="Pattern"
-                size={50}
-                type={"text"}
-                value={singleProd.pattern}
-                name={"pattern"}
-                onChange={handleChange}
-              />
-              <br />
-            </div>
+                <FormControl>
+                  <FormLabel>Description</FormLabel>
+                  <Textarea
+                    name="description"
+                    value={formData.description}
+                    onChange={handleChange}
+                    placeholder="Enter product description"
+                    rows={3}
+                  />
+                </FormControl>
 
-            <div className="inp">
-              <label>Rating: </label>
-              <select
-                onChange={handleChange}
-                value={singleProd.rating}
-                name="rating"
-              >
-                <option value={""}>Select Rating</option>
-                <option value={"1"}>1</option>
-                <option value={"2"}>2</option>
-                <option value={"3"}>3</option>
-                <option value={"4"}>4</option>
-                <option value={"5"}>5</option>
-              </select>
-              <br />
-            </div>
+                <Divider my={2} />
 
-            <div className="inp">
-              <label>Size: </label>
-              <select onChange={handleChange} name="sizes">
-                <option value={""}>Select Size</option>
-                <option value={"S"}>Small</option>
-                <option value={"M"}>Medium</option>
-                <option value={"L"}>Large</option>
-                <option value={"XL"}>Xtra-Large</option>
-              </select>
-              <br />
-            </div>
+                {/* Category & Pricing */}
+                <SimpleGrid columns={{ base: 1, md: 2 }} gap={4}>
+                  <FormControl isRequired>
+                    <FormLabel>Category</FormLabel>
+                    <Select
+                      name="category"
+                      value={formData.category}
+                      onChange={handleChange}
+                      placeholder="Select category"
+                    >
+                      <option value="Jeans">Jeans</option>
+                      <option value="Shirts">Shirts</option>
+                      <option value="Kurtas">Kurtas</option>
+                      <option value="Dress Material">Dress Material</option>
+                      <option value="Sarees">Sarees</option>
+                      <option value="Shoes">Shoes</option>
+                      <option value="Sandals">Sandals</option>
+                    </Select>
+                  </FormControl>
 
-            <button type="submit" id="updatebtn">
-              Update Product
-            </button>
-          </form>
-        </DIV>
+                  <FormControl isRequired>
+                    <FormLabel>Price (₹)</FormLabel>
+                    <NumberInput
+                      min={0}
+                      value={formData.price}
+                      onChange={(_, val) => handleNumberChange("price", val)}
+                    >
+                      <NumberInputField placeholder="0" />
+                      <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                      </NumberInputStepper>
+                    </NumberInput>
+                  </FormControl>
+                </SimpleGrid>
 
-      </div>}
-      <DIV>{!isAuth && <img id="halt" src={halt} />}</DIV>
-    </>
+                <SimpleGrid columns={{ base: 1, md: 2 }} gap={4}>
+                  <FormControl>
+                    <FormLabel>Gender</FormLabel>
+                    <Select
+                      name="gender"
+                      value={formData.gender}
+                      onChange={handleChange}
+                      placeholder="Select gender"
+                    >
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="unisex">Unisex</option>
+                    </Select>
+                  </FormControl>
+
+                  <FormControl>
+                    <FormLabel>Color</FormLabel>
+                    <Input
+                      name="color"
+                      value={formData.color}
+                      onChange={handleChange}
+                      placeholder="e.g., Blue, Red"
+                    />
+                  </FormControl>
+                </SimpleGrid>
+
+                <Divider my={2} />
+
+                {/* Product Details */}
+                <Heading size="sm" mt={2}>Additional Details</Heading>
+
+                <SimpleGrid columns={{ base: 1, md: 2 }} gap={4}>
+                  <FormControl>
+                    <FormLabel>Brand</FormLabel>
+                    <Input
+                      name="brand"
+                      value={formData.brand}
+                      onChange={handleChange}
+                      placeholder="Brand name"
+                    />
+                  </FormControl>
+
+                  <FormControl>
+                    <FormLabel>Material</FormLabel>
+                    <Input
+                      name="material"
+                      value={formData.material}
+                      onChange={handleChange}
+                      placeholder="e.g., Cotton, Silk"
+                    />
+                  </FormControl>
+                </SimpleGrid>
+
+                <SimpleGrid columns={{ base: 1, md: 2 }} gap={4}>
+                  <FormControl>
+                    <FormLabel>Fit</FormLabel>
+                    <Select
+                      name="fit"
+                      value={formData.fit}
+                      onChange={handleChange}
+                      placeholder="Select fit"
+                    >
+                      <option value="Slim">Slim</option>
+                      <option value="Regular">Regular</option>
+                      <option value="Loose">Loose</option>
+                      <option value="Oversized">Oversized</option>
+                    </Select>
+                  </FormControl>
+
+                  <FormControl>
+                    <FormLabel>Pattern</FormLabel>
+                    <Input
+                      name="pattern"
+                      value={formData.pattern}
+                      onChange={handleChange}
+                      placeholder="e.g., Solid, Striped"
+                    />
+                  </FormControl>
+                </SimpleGrid>
+
+                <SimpleGrid columns={{ base: 1, md: 2 }} gap={4}>
+                  <FormControl>
+                    <FormLabel>Rating</FormLabel>
+                    <Select
+                      name="rating"
+                      value={formData.rating}
+                      onChange={handleChange}
+                      placeholder="Select rating"
+                    >
+                      <option value="1">1 Star</option>
+                      <option value="2">2 Stars</option>
+                      <option value="3">3 Stars</option>
+                      <option value="4">4 Stars</option>
+                      <option value="5">5 Stars</option>
+                    </Select>
+                  </FormControl>
+
+                  <FormControl>
+                    <FormLabel>Size</FormLabel>
+                    <Select
+                      name="sizes"
+                      value={formData.sizes}
+                      onChange={handleChange}
+                      placeholder="Select size"
+                    >
+                      <option value="S">Small</option>
+                      <option value="M">Medium</option>
+                      <option value="L">Large</option>
+                      <option value="XL">Extra Large</option>
+                      <option value="XXL">XXL</option>
+                    </Select>
+                  </FormControl>
+                </SimpleGrid>
+
+                <Divider my={4} />
+
+                {/* Submit Button */}
+                <HStack justify="space-between" pt={4}>
+                  <Button
+                    variant="outline"
+                    onClick={() => navigate("/admin/AllProducts")}
+                    isDisabled={isLoading}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    colorScheme="blue"
+                    isLoading={isLoading}
+                    loadingText="Adding Product..."
+                    leftIcon={<CheckCircleIcon />}
+                    size="lg"
+                  >
+                    Add Product
+                  </Button>
+                </HStack>
+              </VStack>
+            </form>
+          </CardBody>
+        </Card>
+      </SimpleGrid>
+    </Container>
   );
 };
 
 export default AddProduct;
 
 const MAINDIV = styled.div`
-  width: 90%;
-  margin: auto;
-  justify-content: start;
+  width: 100%;
+  margin-bottom: 20px;
 
   span {
     color: #5c6bc0;
@@ -295,81 +444,5 @@ const MAINDIV = styled.div`
   span:hover {
     scale: 1.1;
     transition: 500ms;
-  }
-`;
-
-const DIV = styled.div`
-  width: 95%;
-  margin: auto;
-  margin-top: 30px;
-  display: flex;
-  margin-bottom: 50px;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-
-  #halt{
-    text-align: center;
-    margin-left: 35%;
-    margin-top: 150px;
-    scale: 1.2;
-  }
-  
-
-  #updatebtn {
-    background-color: #283593;
-    color: white;
-    padding: 4px 20px;
-    border-radius: 15px;
-  }
-  #updatebtn:hover {
-    cursor: pointer;
-    scale: 1.1;
-    transition: 500ms;
-  }
-  #random{
-    width: 23%;
-    height: 23%;
-    display: flex;
-    box-shadow: rgba(10, 5, 2, 0.24) 0px 3px 8px;
-    border-radius: 20px;
-  }
-  #random: hover{
-    scale: 1.2;
-    transition : 500ms;
-  }
-
-  #form {
-    width: 75%;
-    margin-left: 50px;
-    padding: 20px;
-    background-color: #c5cae9;
-    box-shadow: rgba(10, 5, 2, 0.24) 0px 3px 8px;
-    border-radius: 20px;
-  }
-
-  .inp {
-    width: 70%;
-    display: flex;
-    margin: auto;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    align-items: center;
-  }
-  .inp label {
-    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-      "Lucida Sans", Arial, sans-serif;
-    color: #283593;
-  }
-  .inp input {
-    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-      "Lucida Sans", Arial, sans-serif;
-    padding: 2px 10px;
-    border-radius: 10px;
-  }
-  .inp input:focus {
-    scale: 1.1;
-    transition: 500ms;
-    border-radius: 10px;
   }
 `;

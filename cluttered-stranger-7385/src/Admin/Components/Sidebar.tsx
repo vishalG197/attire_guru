@@ -1,7 +1,7 @@
 import React from 'react';
-import { Box, VStack, Link, Text, Icon, Flex, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon } from '@chakra-ui/react';
+import { Box, VStack, Link, Text, Icon, Flex } from '@chakra-ui/react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
-import { FiHome, FiUsers, FiShoppingBag, FiPackage, FiLogOut, FiGrid, FiList } from 'react-icons/fi';
+import { FiHome, FiUsers, FiShoppingBag, FiPackage, FiLogOut } from 'react-icons/fi';
 import { useDispatch } from 'react-redux';
 import { LOGOUT } from '../../Redux/actiontype';
 import { useNavigate } from 'react-router-dom';
@@ -90,34 +90,6 @@ const Sidebar = () => {
                 <NavItem icon={FiHome} to="/admin/Dashboard">Dashboard</NavItem>
                 <NavItem icon={FiUsers} to="/admin/Users">Users</NavItem>
                 <NavItem icon={FiShoppingBag} to="/admin/AllProducts">All Products</NavItem>
-
-                <Box px={4}>
-                    <Accordion allowMultiple border="none">
-                        <AccordionItem border="none">
-                            <h2>
-                                <AccordionButton _hover={{ bg: 'gray.100' }} borderRadius="lg" p={4}>
-                                    <Box flex="1" textAlign="left" display="flex" alignItems="center" color="gray.600">
-                                        <Icon as={FiGrid} mr={4} />
-                                        Categories
-                                    </Box>
-                                    <AccordionIcon />
-                                </AccordionButton>
-                            </h2>
-                            <AccordionPanel pb={4} pl={0}>
-                                <VStack align="stretch" spacing={1}>
-                                    <NavItem icon={FiList} to="/admin/Jeans">Jeans</NavItem>
-                                    <NavItem icon={FiList} to="/admin/Shirts">Shirts</NavItem>
-                                    <NavItem icon={FiList} to="/admin/Kurtas">Kurtas</NavItem>
-                                    <NavItem icon={FiList} to="/admin/Dress-Material">Dress Material</NavItem>
-                                    <NavItem icon={FiList} to="/admin/Sarees">Sarees</NavItem>
-                                    <NavItem icon={FiList} to="/admin/Shoes">Shoes</NavItem>
-                                    <NavItem icon={FiList} to="/admin/Sandals">Sandals</NavItem>
-                                </VStack>
-                            </AccordionPanel>
-                        </AccordionItem>
-                    </Accordion>
-                </Box>
-
                 <NavItem icon={FiPackage} to="/admin/Orders">Orders</NavItem>
                 <NavItem icon={FiPackage} to="/admin/AddProduct">Add Product</NavItem>
 
